@@ -1,15 +1,31 @@
-import React, { Component } from 'react';
+import React, { Component } from "react";
+import { Button, FormGroup, FormControl, ControlLabel } from "react-bootstrap"
 import auth from '../../lib/auth-service';
+import "./auth.css";
 
-// import { AuthConsumer } from '../components/AuthProvider';
+export default class Login extends Component {
+  constructor(props) {
+    super(props);
 
-class Login extends Component {
-  state = {
-    username: "",
-    password: "",
+    this.state = {
+      username: "",
+      password: ""
+    };
   }
 
-  handleFormSubmit = (event) => {
+  validateForm = event => {
+    this.state.username.length > 0 && this.state.password.length > 0
+  }
+
+
+  handleChange = event => {
+    const {id, value} = event.target
+    // console.log(id)
+    // console.log([id])
+    this.setState({ [id]: value });
+  }
+
+  handleSubmit = event => {
     event.preventDefault();
     const { username, password } = this.state
 
@@ -20,32 +36,37 @@ class Login extends Component {
     .catch( error => console.log(error) )
   }
 
-  handleChange = (event) => {
-    const {name, value} = event.target;
-    this.setState({[name]: value});
-  }
-
   render() {
-    const { username, password } = this.state;
     return (
-     <div className="container col-md-6 grid-md" id="inbox">
-      <form className="form " onSubmit={this.handleFormSubmit}>
-
-        <div className="form-group">
-           <label className="form-label">Username:</label>
-           <input className="form-input"type="text" name="username" value={username} onChange={this.handleChange}/>
-         </div>
-        <div className="form-group">
-           <label className="form-label">Password:</label>
-           <input className="form-input"type="password" name="password" value={password} onChange={this.handleChange} />
-         </div>
-        <div className="form-group">
-           <input className="btn btn-primary input-group-btn form-button" type="submit" value="Login" />
-         </div>
+      <Component className="Login">
+        <form onSubmit={this.handleSubmit}>
+          <FormGroup controlId="username" bsSize="large">
+            <ControlLabel>User Name</ControlLabel>
+            <FormControl
+              autoFocus
+              type="syring"
+              value={this.state.email}
+              onChange={this.handleChange}
+            />
+          </FormGroup>
+          <FormGroup controlId="password" bsSize="large">
+            <ControlLabel>Password</ControlLabel>
+            <FormControl
+              value={this.state.password}
+              onChange={this.handleChange}
+              type="password"
+            />
+          </FormGroup>
+          <Button
+            block
+            bsSize="large"
+            disabled={!this.validateForm()}
+            type="submit"
+          >
+            Login
+          </Button>
         </form>
-       </div>
-    )
+      </Component>
+    );
   }
 }
-
-export default Login;
