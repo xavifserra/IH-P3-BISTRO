@@ -1,15 +1,20 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
-import { withAuth } from '../components/AuthProvider';
+import { withAuth } from './AuthProvider';
+import  AppBarMenu from './AppNavBar/AppBarMenu';
 
 class Navbar extends Component {
   render() {
     const { isLogged, user, logout } = this.props;
     const { username } = user;
+
     if (isLogged) {
       return <div>
-        <p>username: { username }</p>
-        <p onClick={logout}>Logout</p>
+        <AppBarMenu/>
+        <ul>
+          <li>username: { username }</li>
+          <li onClick={logout}>Logout</li>
+        </ul>
       </div>
     } else {
       return <div>
@@ -17,7 +22,7 @@ class Navbar extends Component {
         <Link to='/signup'>Signup</Link>
       </div>
     }
-  
+
   }
 }
 
