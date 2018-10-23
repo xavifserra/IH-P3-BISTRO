@@ -3,14 +3,21 @@ import { withAuth } from '../components/AuthProvider';
 import Map from '../components/Map/Map';
 import ListPlaces from '../components/ListPlaces/ListPlaces';
 
-
 class Private extends Component {
   render() {
     const { user } = this.props
     return (
       <div>
-        <h1>Welcome {user.username}</h1>
         <Map/>
+        <p>
+        Api: {process.env.REACT_APP_MAPBOXAPI}
+        </p>
+        <p>
+        .ENV: {process.env.NODE_ENV}
+        </p>
+        <p>
+        .ENV: {process.env.PUBLIC_URL}
+        </p>
         <ListPlaces/>
       </div>
     )
