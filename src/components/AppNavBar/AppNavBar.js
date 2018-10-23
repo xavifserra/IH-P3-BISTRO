@@ -1,27 +1,28 @@
 import React from 'react';
-import PropTypes from 'prop-types';
 import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
 import IconButton from '@material-ui/core/IconButton';
-import Typography from '@material-ui/core/Typography';
 import InputBase from '@material-ui/core/InputBase';
 import Badge from '@material-ui/core/Badge';
 import MenuItem from '@material-ui/core/MenuItem';
 import Menu from '@material-ui/core/Menu';
 import { fade } from '@material-ui/core/styles/colorManipulator';
 import { withStyles } from '@material-ui/core/styles';
-import MenuIcon from '@material-ui/icons/Menu';
 import SearchIcon from '@material-ui/icons/Search';
 import AccountCircle from '@material-ui/icons/AccountCircle';
-import MailIcon from '@material-ui/icons/Mail';
-import NotificationsIcon from '@material-ui/icons/Notifications';
+import TurnedIn from '@material-ui/icons/TurnedIn';
 import MoreIcon from '@material-ui/icons/MoreVert';
 
-import { Link } from 'react-router-dom';
+import { Link, Redirect } from 'react-router-dom';
 import { withAuth } from '../AuthProvider';
 
+import PropTypes from 'prop-types';
+import Typography from '@material-ui/core/Typography';
+import MenuIcon from '@material-ui/icons/Menu';
+import MailIcon from '@material-ui/icons/Mail';
+
 const styles = theme => ({
-  root: {
+  menuBar: {
     width: '100%',
   },
   grow: {
@@ -146,19 +147,11 @@ class AppNavBar extends React.Component {
       >
         <MenuItem>
           <IconButton color="inherit">
-            <Badge className={classes.margin} badgeContent={4} color="secondary">
-              <MailIcon />
-            </Badge>
-          </IconButton>
-          <p>Messages</p>
-        </MenuItem>
-        <MenuItem>
-          <IconButton color="inherit">
             <Badge className={classes.margin} badgeContent={11} color="secondary">
-              <NotificationsIcon />
+              <TurnedIn />
             </Badge>
           </IconButton>
-          <p>Notifications</p>
+          <p>Fav</p>
         </MenuItem>
         <MenuItem onClick={this.handleProfileMenuOpen}>
           <IconButton color="inherit">
@@ -171,13 +164,9 @@ class AppNavBar extends React.Component {
 
     if (isLogged) {
     return (
-        <div className={classes.root}>
+        <div className={classes.menuBar}>
           <AppBar position="static">
             <Toolbar>
-              <IconButton className={classes.menuButton} color="inherit" aria-label="Open drawer">
-                <MenuIcon />
-              </IconButton>
-
               <div className={classes.search}>
                 <div className={classes.searchIcon}>
                   <SearchIcon />
@@ -194,7 +183,7 @@ class AppNavBar extends React.Component {
                   <div className={classes.sectionDesktop}>
                     <IconButton color="inherit">
                       <Badge className={classes.margin} badgeContent={17} color="secondary">
-                        <NotificationsIcon />
+                        <TurnedIn />
                       </Badge>
                     </IconButton>
                     <IconButton
@@ -220,6 +209,7 @@ class AppNavBar extends React.Component {
     }else{
       return(
         <div>
+          Redirect
           <Link to='/login'>Login</Link>
           <Link to='/signup'>Signup</Link>
         </div>)
@@ -227,8 +217,8 @@ class AppNavBar extends React.Component {
   }
 }
 
-AppNavBar.propTypes = {
-  classes: PropTypes.object.isRequired,
-};
+// AppNavBar.propTypes = {
+//   classes: PropTypes.object.isRequired,
+// };
 
 export default withAuth()(withStyles(styles)(AppNavBar));
