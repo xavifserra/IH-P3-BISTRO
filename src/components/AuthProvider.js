@@ -8,12 +8,13 @@ export const AuthContext = React.createContext(
 export const { Provider, Consumer }  = AuthContext.Consumer;
 
 export const withAuth = () => (Comp) => {
+
   return class WithAuth extends Component {
     render() {
       return (
         <Consumer>
           {(authStore) => {
-            return <Comp 
+            return <Comp
               isLogged={authStore.isLogged}
               user={authStore.user}
               logout={authStore.logout}
@@ -22,7 +23,7 @@ export const withAuth = () => (Comp) => {
           }}
         </Consumer>
       )
-    }    
+    }
   }
 }
 
@@ -43,7 +44,7 @@ export default class AuthProvider extends Component {
   logoutUser = () =>{
     auth.logout()
       .then(() => {
-        this.setState({ 
+        this.setState({
           isLogged: false,
           user: {},
         });
@@ -61,7 +62,7 @@ export default class AuthProvider extends Component {
         })
       })
       .catch((error) => {
-        this.setState({ 
+        this.setState({
           isLogged: false,
           user: {},
           status: 'loaded'
@@ -79,7 +80,7 @@ export default class AuthProvider extends Component {
         return (
           <Provider value={{ isLogged, user, logout: this.logoutUser, setUser: this.setUser }}>
             {children}
-          </Provider>    
+          </Provider>
         );
     }
   }
