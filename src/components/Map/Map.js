@@ -4,14 +4,21 @@ import Paper from '@material-ui/core/Paper'
 
 import { Link } from 'react-router-dom';
 import { withAuth } from '../AuthProvider';
+
 import { withStyles } from '@material-ui/core/styles';
 
-const styles = theme => ({
+import places from '../../lib/places-service'
+import { Form } from 'muicss/lib/react/form';
+
+
+console.log(geojson);
+
+const stylePaper = theme => ({
   mapContainer: {
     ...theme.mixins.gutters(),
     padding: theme.spacing.unit,
-    height: "60vh",
-    width: "98vw",
+    height: "70vh",
+    width: "100vw",
     //marginLeft: theme.spacing.unit,
     //marginRigth: theme.spacing.unit,
     // paddingTop: theme.spacing.unit * 2,
@@ -21,8 +28,8 @@ const styles = theme => ({
 
 const MapReact = ReactMapboxGl({
   accessToken: 'pk.eyJ1IjoieGF2aWZzIiwiYSI6ImNqa2ExZGpqdDIyMmwza3FsMWN6ODRkNGIifQ.NAa3sEP45u118hQ4btsCEw',
-  minZoom: 15,
-  maxZoom: 16,
+  // minZoom: 15,
+  // maxZoom: 16,
   dragRotate: false,
 })
 
@@ -35,6 +42,7 @@ class Map extends PureComponent {
       lat: 41.397779,
       center: [0, 0],
       zoom: [15],
+      geojson: undefined,
     };
   }
 
@@ -48,6 +56,8 @@ class Map extends PureComponent {
                   position.coords.latitude],
         })
       })
+      // places.getAroundGeoJSON(this.lat, this.lng, 1000 )
+      // .then(result => this.geojson=result)
     }
   }
 
@@ -58,7 +68,7 @@ class Map extends PureComponent {
     const { classes } = this.props;
     return (
       <Paper className={classes.mapContainer}>
-      <MapReact
+        <MapReact
           style = "mapbox://styles/mapbox/streets-v8"
           center={center}
           zoom={zoom}
@@ -71,12 +81,19 @@ class Map extends PureComponent {
         <Layer
           type="symbol"
           id="marker"
-          layout={{ "icon-image": "me-15" }}>
+          layout={{
+            "icon-size": 1,
+            "icon-image": "marker-15",
+            "text-anchor":"top-left",
+            "text-field": "you" }}>
           <Feature coordinates={[lng, lat]}/>
         </Layer>
         <GeoJSONLayer
-          data={geojson}
+          data={this.geojson}
           symbolLayout={{
+            "icon-image": "restaurant-15",
+            "icon-size": 1,
+            // "marker-color": "#944944" ,
             "text-field": "{place}",
             "text-font": ["Open Sans Semibold", "Arial Unicode MS Bold"],
             "text-offset": [0, 0.6],
@@ -88,4 +105,4 @@ class Map extends PureComponent {
   }
 };
 
-export default withAuth()(withStyles(styles)(Map));
+export default withAuth()(withStyles(stylePaper)(Map));

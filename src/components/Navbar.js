@@ -20,7 +20,6 @@ class Navbar extends Component {
       return <div>
         <Link to='/login'>Login</Link>
         <Link to='/signup'>Signup</Link>
-        {process.env.REACT_APP_MAPBOX_API}
       </div>
     }
 

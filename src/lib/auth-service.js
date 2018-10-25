@@ -3,7 +3,9 @@ import axios from 'axios';
 class Auth {
   constructor() {
     this.auth = axios.create({
-      baseURL: 'http://localhost:5000',
+      baseURL: process.env.NODE_ENV ==='development'
+                ? process.env.REACT_APP_DEV_URI
+                : process.env.REACT_APP_PRODUCTION_URI,
       withCredentials: true
     })
   }
@@ -31,6 +33,6 @@ class Auth {
   }
 }
 
-const auth = new Auth();
+const auth = new Auth()
 
 export default auth
