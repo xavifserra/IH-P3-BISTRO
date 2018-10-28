@@ -1,15 +1,15 @@
 import React, { Component } from 'react';
-import { Link } from 'react-router-dom';
+// import { Link } from 'react-router-dom';
 import { withAuth } from '../AuthProvider';
 
 import Paper from '@material-ui/core/Paper'
 
 class ListPlaces extends Component {
 
-  
+
   render() {
-    const { isLogged, user, logout } = this.props;
-    const { username } = user;
+    // const { isLogged, user, logout } = this.props;
+    // const { username } = user;
 
     return (
       <div>

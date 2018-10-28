@@ -16,6 +16,7 @@ import MoreIcon from '@material-ui/icons/MoreVert';
 
 import { Link, Redirect } from 'react-router-dom';
 import { withAuth } from '../AuthProvider';
+import { withDataPlaces } from '../PlacesProvider';
 
 import PropTypes from 'prop-types';
 
@@ -119,40 +120,40 @@ class AppNavBar extends React.Component {
     const isMenuOpen = Boolean(anchorEl);
     const isMobileMenuOpen = Boolean(mobileMoreAnchorEl);
 
-    const { isLogged, user, logout } = this.props;
-    const { username } = user;
-
-    const renderMobileMenu = (
-      <Menu
-        anchorEl={mobileMoreAnchorEl}
-        anchorOrigin={{ vertical: 'top', horizontal: 'right' }}
-        transformOrigin={{ vertical: 'top', horizontal: 'right' }}
-        open={isMobileMenuOpen}
-        onClose={this.handleMobileMenuClose}
-      >
-        <MenuItem>
-          <IconButton color="inherit">
-            <Badge className={classes.margin} badgeContent={11} color="secondary">
-              <TurnedIn />
-            </Badge>
-          </IconButton>
-          <p>Fav</p>
-        </MenuItem>
-        <MenuItem onClick={this.handleProfileMenuOpen}>
-          <IconButton color="inherit">
-            <AccountCircle />
-          </IconButton>
-          <p>Profile</p>
-        </MenuItem>
-        <MenuItem onClick={logout}>
-          <IconButton color="inherit">
-            <ExitToApp />
-          </IconButton>
-          <p>LogOut</p>
-        </MenuItem>
-      </Menu>
-    );
+    const { isLogged, user, logout, userProfile, favoritesMe } = this.props;
+    const { username, favorites } = user;
     if (isLogged) {
+      const renderMobileMenu = (
+        <Menu
+          anchorEl={mobileMoreAnchorEl}
+          anchorOrigin={{ vertical: 'top', horizontal: 'right' }}
+          transformOrigin={{ vertical: 'top', horizontal: 'right' }}
+          open={isMobileMenuOpen}
+          onClose={this.handleMobileMenuClose}
+        >
+          <MenuItem onClick={favoritesMe}>
+            <IconButton color="inherit">
+              <Badge className={classes.margin} badgeContent={favorites.length} color="primary">
+                <TurnedIn />
+              </Badge>
+            </IconButton>
+            <p>Fav</p>
+          </MenuItem>
+          <MenuItem onClick={userProfile}>
+            <IconButton color="inherit">
+              <AccountCircle />
+            </IconButton>
+            <p>Profile</p>
+          </MenuItem>
+          <MenuItem onClick={logout}>
+            <IconButton color="inherit">
+              <ExitToApp />
+            </IconButton>
+            <p>LogOut</p>
+          </MenuItem>
+        </Menu>
+      );
+
     return (
         <div className={classes.menuBar}>
           <AppBar position="static">
@@ -171,15 +172,15 @@ class AppNavBar extends React.Component {
               </div>
               <div className={classes.grow} />
                 <div className={classes.sectionDesktop}>
-                  <IconButton color="inherit">
-                    <Badge className={classes.margin} badgeContent={17} color="secondary">
+                  <IconButton onClick={favoritesMe} color="inherit">
+                    <Badge className={classes.margin} badgeContent={favorites.length} color="secondary">
                       <TurnedIn />
                     </Badge>
                   </IconButton>
                   <IconButton
                     aria-owns={isMenuOpen ? 'material-appbar' : null}
                     aria-haspopup="true"
-                    onClick={this.handleProfileMenuOpen}
+                    onClick={userProfile}
                     color="inherit"
                   >
                   <AccountCircle />
@@ -208,8 +209,8 @@ class AppNavBar extends React.Component {
       return(
         <div>
           <Redirect to='/login'></Redirect>
-          <Link to='/login'>Login</Link>
-          <Link to='/signup'>Signup</Link>
+          {/* <Link to='/login'>Login</Link>
+          <Link to='/signup'>Signup</Link> */}
         </div>)
     }
   }
@@ -218,5 +219,4 @@ class AppNavBar extends React.Component {
 AppNavBar.propTypes = {
   classes: PropTypes.object.isRequired,
 };
-
-export default withAuth()(withStyles(styles)(AppNavBar));
+export default withAuth()(withDataPlaces()(withStyles(styles)(AppNavBar)));

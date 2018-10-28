@@ -1,5 +1,7 @@
 import React, { Component } from 'react'
 import auth from '../lib/auth-service';
+import CircularProgress  from '../components/Progress/CircularProgres';
+
 
 export const AuthContext = React.createContext(
   // authStore // default value
@@ -8,7 +10,6 @@ export const AuthContext = React.createContext(
 export const { Provider, Consumer }  = AuthContext.Consumer;
 
 export const withAuth = () => (Comp) => {
-
   return class WithAuth extends Component {
     render() {
       return (
@@ -19,6 +20,7 @@ export const withAuth = () => (Comp) => {
               user={authStore.user}
               logout={authStore.logout}
               setUser={authStore.setUser}
+              userProfile={authStore.userProfile}
               {...this.props} />
           }}
         </Consumer>
@@ -52,6 +54,10 @@ export default class AuthProvider extends Component {
       .catch( error => console.log(error))
   }
 
+  userProfile = () => {
+    return alert('user profile')
+  }
+
   componentDidMount() {
     auth.me()
       .then((user) => {
@@ -75,10 +81,15 @@ export default class AuthProvider extends Component {
     const { children } = this.props;
     switch (status) {
       case 'loading':
-        return <div>Loading</div>
+        return <div>
+          <center>
+            Loading..
+            <CircularProgress/>
+          </center>
+        </div>
       default:
         return (
-          <Provider value={{ isLogged, user, logout: this.logoutUser, setUser: this.setUser }}>
+          <Provider value={{ isLogged, user, logout: this.logoutUser, setUser: this.setUser, userProfile: this.userProfile }}>
             {children}
           </Provider>
         );

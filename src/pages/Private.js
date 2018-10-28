@@ -1,10 +1,13 @@
 import React, { Component } from 'react'
 import { withAuth } from '../components/AuthProvider';
+import PlacesProvider from '../components/PlacesProvider'
 import Map from '../components/Map/Map';
 import ListPlaces from '../components/ListPlaces/ListPlaces';
 class Private extends Component {
   render() {
-    const { user } = this.props
+    // const { user } = this.props
+
+
     return (
       <div>
         {/* <div class='col12 pad4 contain fill-navy dark clip'>
@@ -29,8 +32,11 @@ class Private extends Component {
             </fieldset>
         </div>
       </div> */}
+      {/* <PlacesProvider> */}
         <Map/>
         <ListPlaces/>
+      {/* </PlacesProvider> */}
+
       </div>
     )
   }
