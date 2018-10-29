@@ -1,15 +1,12 @@
-import React, { Component, PureComponent } from 'react';
+import React, { PureComponent } from 'react';
 import ReactMapboxGl, { Layer, Feature, GeoJSONLayer } from "react-mapbox-gl";
 import Paper from '@material-ui/core/Paper'
+import { withStyles } from '@material-ui/core/styles';
 
 // import { Link } from 'react-router-dom';
 import { withAuth } from '../AuthProvider';
 import { withDataPlaces } from '../PlacesProvider';
-
-import { withStyles } from '@material-ui/core/styles';
-
 // import { Form } from 'muicss/lib/react/form';
-
 
 const stylePaper = theme => ({
   mapContainer: {
@@ -43,9 +40,9 @@ class Map extends PureComponent {
       // geojson: geojson,
     };
   }
- componentWillMount(){
+ componentDidMount(){
     //this.props.locateMe()
-  }
+ }
 
   render() {
     const { zoom, center } = this.state;
@@ -55,6 +52,7 @@ class Map extends PureComponent {
     return (
       <Paper className={classes.mapContainer}>
         <MapReact
+        // eslint-disable-next-line
           style = "mapbox://styles/mapbox/streets-v8"
           center={center}
           zoom={zoom}
@@ -65,7 +63,7 @@ class Map extends PureComponent {
             width: "100%",
           }}
         >
-        {/* <Layer
+        <Layer
           type="symbol"
           id="marker"
           layout={{
@@ -74,7 +72,7 @@ class Map extends PureComponent {
             "text-anchor":"top-left",
             "text-field": "you" }}>
           <Feature coordinates={[lng, lat]}/>
-        </Layer> */}
+        </Layer>
         <GeoJSONLayer
           data={ geojson }
           symbolLayout={{

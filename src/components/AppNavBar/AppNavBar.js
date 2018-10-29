@@ -14,7 +14,7 @@ import ExitToApp from '@material-ui/icons/ExitToAppRounded';
 import TurnedIn from '@material-ui/icons/TurnedIn';
 import MoreIcon from '@material-ui/icons/MoreVert';
 
-import { Link, Redirect } from 'react-router-dom';
+import { Redirect } from 'react-router-dom';
 import { withAuth } from '../AuthProvider';
 import { withDataPlaces } from '../PlacesProvider';
 
@@ -133,7 +133,7 @@ class AppNavBar extends React.Component {
         >
           <MenuItem onClick={favoritesMe}>
             <IconButton color="inherit">
-              <Badge className={classes.margin} badgeContent={favorites.length} color="primary">
+              <Badge className={classes.margin} badgeContent={favorites.length} color="secondary">
                 <TurnedIn />
               </Badge>
             </IconButton>
