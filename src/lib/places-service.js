@@ -12,7 +12,7 @@ class Places {
    getAroundGeoJSON(lat, lng, dist) {
     return this.places.get(`/api/v1/places/aroundGeoJSON?lat=${lat}&lng=${lng}&dist=${dist}`)
     .then(({ data }) => {
-      console.log({ lat, lng, dist ,data });
+      // console.log({ lat, lng, dist ,data });
       return data
     })
 

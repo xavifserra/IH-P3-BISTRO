@@ -8,19 +8,19 @@ import Signup from './pages/Signup'
 import Login from './pages/Login'
 import AuthProvider from './components/AuthProvider'
 import PlacesProvider from './components/PlacesProvider'
-import firebase from "firebase";
+// import firebase from "firebase";
 
 import './App.css'
 
-var config = {
-  apiKey: "AIzaSyDPTWpsZLlLFJ7fkt8EK0kJ8cFYR37MU9Q",
-  authDomain: "bistro-219204.firebaseapp.com",
-  databaseURL: "https://bistro-219204.firebaseio.com",
-  projectId: "bistro-219204",
-  storageBucket: "bistro-219204.appspot.com",
-  messagingSenderId: "5126862944"
-};
-firebase.initializeApp(config);
+// var config = {
+//   apiKey: "AIzaSyDPTWpsZLlLFJ7fkt8EK0kJ8cFYR37MU9Q",
+//   authDomain: "bistro-219204.firebaseapp.com",
+//   databaseURL: "https://bistro-219204.firebaseio.com",
+//   projectId: "bistro-219204",
+//   storageBucket: "bistro-219204.appspot.com",
+//   messagingSenderId: "5126862944"
+// };
+// firebase.initializeApp(config);
 class App extends Component {
   render() {
     return (

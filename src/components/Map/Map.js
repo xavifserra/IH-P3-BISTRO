@@ -28,6 +28,7 @@ const MapReact = ReactMapboxGl({
   accessToken: process.env.REACT_APP_MAPBOX_API,// 'pk.eyJ1IjoieGF2aWZzIiwiYSI6ImNqa2ExZGpqdDIyMmwza3FsMWN6ODRkNGIifQ.NAa3sEP45u118hQ4btsCEw',
   // minZoom: 15,
   // maxZoom: 16,
+  scrollWheelZoom: false,
   dragRotate: false,
 })
 
@@ -57,13 +58,14 @@ class Map extends PureComponent {
           style = "mapbox://styles/mapbox/streets-v8"
           center={center}
           zoom={zoom}
+          showUserLocation={true}
           movingMethod="jumpTo"
           containerStyle = {{
             height: "100%",
             width: "100%",
           }}
         >
-        <Layer
+        {/* <Layer
           type="symbol"
           id="marker"
           layout={{
@@ -72,7 +74,7 @@ class Map extends PureComponent {
             "text-anchor":"top-left",
             "text-field": "you" }}>
           <Feature coordinates={[lng, lat]}/>
-        </Layer>
+        </Layer> */}
         <GeoJSONLayer
           data={ geojson }
           symbolLayout={{

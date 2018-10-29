@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 // import { Link } from 'react-router-dom';
 import { withAuth } from '../AuthProvider';
+import { withDataPlaces } from '../PlacesProvider';
 
 import Paper from '@material-ui/core/Paper'
 
@@ -8,23 +9,41 @@ class ListPlaces extends Component {
 
 
   render() {
-    // const { isLogged, user, logout } = this.props;
-    // const { username } = user;
+    const { _id: userId } = this.props.user;
+     const {
+       _id: placeId,
+    //   id,
+    //   place,
+    //   address,
+    //   category,
+    //   location ,
+    //   numReviews,
+    //   reviews,
+    //   details,
+    //   polarity,
+       lat,
+       lng } = this.props.properties.geojson.features
+
+      console.log(this.props);
 
     return (
       <div>
         <Paper>
+          {/* {console.log({
+              _id: placeId,
+              id,
+              place,
+              address,
+              category,
+              location ,
+              numReviews,
+              reviews,
+              details,
+              polarity,
+              lat,
+              lng })}; */}
           <ul>
-            <li> element 1</li>
-            <li> element 2</li>
-            <li> element 3</li>
-          </ul>
-        </Paper>
-        <Paper>
-          <ul>
-            <li> element 1</li>
-            <li> element 2</li>
-            <li> element 3</li>
+            <li> element</li>
           </ul>
         </Paper>
       </div>
@@ -32,4 +51,4 @@ class ListPlaces extends Component {
   }
 }
 
-export default withAuth()(ListPlaces);
+export default withAuth()(withDataPlaces()(ListPlaces));

@@ -83,7 +83,7 @@ export default class AuthProvider extends Component {
       case 'loading':
         return <div>
           <center>
-            Loading..
+            Loading
             <CircularProgress/>
           </center>
         </div>
