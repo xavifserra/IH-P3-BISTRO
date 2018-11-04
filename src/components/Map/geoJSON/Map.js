@@ -1,24 +1,19 @@
 import React, { PureComponent } from 'react';
-import ReactMapboxGl, { Layer, Feature, GeoJSONLayer } from "react-mapbox-gl";
-import { ScaleControl, Popup } from "react-mapbox-gl";
-
-import Paper from '@material-ui/core/Paper'
-import { withStyles } from '@material-ui/core/styles';
+import ReactMapboxGl, { Layer, Feature, GeoJSONLayer, Popup } from "react-mapbox-gl";
 
 // import { Link } from 'react-router-dom';
 import { withAuth } from '../AuthProvider';
 import { withDataPlaces } from '../PlacesProvider';
-import ModalForm from '../Modal/ModalForm';
 
-// import 'mapbox-gl/dist/mapbox-gl.css';
-// import './map.css'
+import { Paper } from '@material-ui/core';
+import { withStyles } from '@material-ui/core/styles';
 
 const stylePaper = theme => ({
   mapContainer: {
     ...theme.mixins.gutters(),
     padding: theme.spacing.unit,
     height: "70vh",
-    width: "93vw",
+    width: "100vw",
     //marginLeft: theme.spacing.unit,
     //marginRigth: theme.spacing.unit,
     // paddingTop: theme.spacing.unit * 2,
@@ -32,6 +27,9 @@ const MapReact = ReactMapboxGl({
   //maxZoom: 17,
   scrollWheelZoom: false,
   dragRotate: false,
+  doubleClickZoom: false,
+  showCollisionBoxes: true,
+  onClick : (map, e) => this.onMapClick(map,e)
 })
 
 class Map extends PureComponent {
@@ -45,10 +43,16 @@ class Map extends PureComponent {
       // geojson: geojson,
     };
   }
-  componentDidMount(){
-      //this.props.locateMe()
+
+  onMapClick (map, evt) {
+    console.log(evt.lngLat);
   }
-  handleOnclick(e){
+
+  handleOnClickMap (e) {
+    console.log(e.Layer);
+  }
+
+  handleOnClickElement(e){
     console.log(e);
     const { lat, lng } = e.lngLat
     console.log(lat,lng);
@@ -61,10 +65,8 @@ class Map extends PureComponent {
         'bottom-right': [-12, -38]
       }}>
       <h1>Popup</h1>
-    </Popup>)
-    //console.log(e._easeOptions.center);
-    // console.log(e.features[0].geometry.coordinates);
-    // alert(e.features[0].geometry.coordinates)
+    </Popup>
+    )
   }
 
   render() {
@@ -85,10 +87,7 @@ class Map extends PureComponent {
           height: "100%",
           width: "100%",
         }}
-        showCollisionBoxes= {true}
-        onDblClick= {this.handleOnclick}
         >
-          <ScaleControl/>
           <Layer
             type="symbol"
             id="marker"
@@ -99,33 +98,20 @@ class Map extends PureComponent {
               "text-font": ["Open Sans Semibold", "Arial Unicode MS Bold"],
               "text-offset": [0, 0.6],
               "text-field": "you" }}>
-              <Feature coordinates={[lng, lat]}/>
-            </Layer>
-            <GeoJSONLayer
-              data={ geojson }
-              symbolOnClick= {this.handleOnclick}
-              symbolLayout={{
-                "icon-image": "restaurant-15",
-                "icon-size": 1,
-                "text-field": "{place}",
-                "text-font": ["Open Sans Semibold", "Arial Unicode MS Bold"],
-                "text-offset": [0, 0.6],
-                "text-anchor": "top"
-              }}/>
-            <ModalForm
-            title= 'new place'
-            classButtonShow="mdl-button mdl-js-button mdl-button--fab mdl-js-ripple-effect mdl-button--colored"
-            classButtonHide="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent"
-            textButtonShow="add"
-            styleButtonShow = {{
-              margin:"5px",
-              position:"relative",
-              float:"right"
-            }}
-            >
-            <div><h1>test</h1></div>
-            </ModalForm>
-          </MapReact>
+            <Feature coordinates={[lng, lat]}/>
+          </Layer>
+          <GeoJSONLayer
+            data={ geojson }
+            symbolOnClick = { this.handleOnClickElement }
+            symbolLayout={{
+              "icon-image": "restaurant-15",
+              "icon-size": 1,
+              "text-field": "{place}",
+              "text-font": ["Open Sans Semibold", "Arial Unicode MS Bold"],
+              "text-offset": [0, 0.6],
+              "text-anchor": "top"
+            }}/>
+        </MapReact>
       </Paper>
     );
   }

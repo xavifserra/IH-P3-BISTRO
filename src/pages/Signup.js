@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 import auth from '../lib/auth-service';
 
-import './access.css'
+import './styles/access.css'
 class Signup extends Component {
 
   state = {

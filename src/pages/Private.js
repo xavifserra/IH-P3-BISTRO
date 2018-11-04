@@ -1,9 +1,12 @@
 import React, { Component } from 'react'
+
 import { withAuth } from '../components/AuthProvider';
 import { withDataPlaces } from '../components/PlacesProvider'
-import Map from '../components/Map/Map';
-import ListPlaces from '../components/ListPlaces/ListPlaces';
+
 import Paper  from '@material-ui/core/Paper';
+import Map from '../components/Map/Map';
+
+import ListPlaces from '../components/ListPlaces/ListPlaces';
 import { withStyles } from '@material-ui/core/styles';
 
 const stylePaper = theme => ({

@@ -3,7 +3,7 @@ import auth from '../lib/auth-service';
 
 import { Link } from 'react-router-dom';
 
-import './access.css'
+import './styles/access.css'
 class Login extends Component {
   state = {
     username: "",

@@ -1,0 +1,26 @@
+.container{
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-image: url('../assets/gor-davtyan-725321-unsplash.jpg') ;
+  background-position: center;
+  background-size: cover;
+}
+.main-container > .mdl-card__title{
+  background-color: #3f51b5fe;
+  width: 100%;
+  justify-content: center;
+}
+
+.main-container{
+  padding: 5%;
+  justify-content: center;
+  align-items: center;
+  background-color:  #eeeeeecc;
+}
+
+.form-group{
+  /* border: 1px black solid; */
+  padding: 5%;
+}
