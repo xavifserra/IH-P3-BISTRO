@@ -2,15 +2,7 @@ import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 import auth from '../lib/auth-service';
 
-import Container from 'muicss/lib/react/container';
-import Button from 'muicss/lib/react/button';
-import Form from 'muicss/lib/react/form';
-import Input from 'muicss/lib/react/input';
-import Row from 'muicss/lib/react/row'
-import Col from 'muicss/lib/react/col'
-import Panel from 'muicss/lib/react/panel';
-
-
+import './access.css'
 class Signup extends Component {
 
   state = {
@@ -44,36 +36,33 @@ class Signup extends Component {
 
   render() {
     const { username, password, email } = this.state;
-    return (
-      <Container id="main-container" fluid={true}>
-      <Row>
-        <Col md="3"/>
-        <Col md="6">
-          <Panel>
-            <center><div className="mui--text-headline">BISTRO</div></center>
-            <center><div className="mui--text-title">New user</div></center>
-          </Panel>
-          <Form color="form-group" onSubmit={this.handleFormSubmit}>
-            <label>Username:</label>
-            <Input type="text" name="username" value={username} onChange={this.handleChange}/>
-            <label>Password:</label>
-            <Input type="password" name="password" value={password} onChange={this.handleChange} />
-            <label>email:</label>
-            <Input type="email" name="email" value={email} onChange={this.handleChange} />
-            <center>
-              <Button id="buttons" variant="raised" color="primary">SignUp</Button>
-            </center>
-          </Form>
-          <center>
-            <p>Already have account?
-              <Link to={"/login"}> Login</Link>
-            </p>
-          </center>
-          </Col>
-        <Col md="3"/>
-        </Row>
 
-      </Container>
+    return (
+      <div className="container">
+        <div className="main-container  mdl-card mdl-shadow--2dp" >
+          <div className="mdl-card__title">
+              <h2>BISTRO</h2>
+          </div>
+
+          <form className="form-group" onSubmit={this.handleFormSubmit}>
+            <label>Username:</label>
+            <input className="mdl-textfield__input"  type="text" name="username" value={username} onChange={this.handleChange}/>
+            <label>Password:</label>
+            <input className="mdl-textfield__input"  type="password" name="password" value={password} onChange={this.handleChange} />
+            <label>email:</label>
+            <input className="mdl-textfield__input"  type="email" name="email" value={email} onChange={this.handleChange} />
+
+            <div class="mdl-card__supporting-text">
+              <p>Already have account?
+                <Link to={"/login"}> Login</Link>
+              </p>
+            </div>
+              <div className="mdl-card__actions mdl-card--border">
+                  <button className="mdl-button mdl-js-button mdl-button--raised mdl-button--colored mdl-js-button ">SignUp</button>
+              </div>
+          </form>
+        </div>
+      </div>
     )
   }
 }

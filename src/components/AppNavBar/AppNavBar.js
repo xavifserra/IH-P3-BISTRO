@@ -1,24 +1,24 @@
-import React from 'react';
-import AppBar from '@material-ui/core/AppBar';
-import Toolbar from '@material-ui/core/Toolbar';
-import IconButton from '@material-ui/core/IconButton';
-import InputBase from '@material-ui/core/InputBase';
-import Badge from '@material-ui/core/Badge';
-import MenuItem from '@material-ui/core/MenuItem';
-import Menu from '@material-ui/core/Menu';
-import { fade } from '@material-ui/core/styles/colorManipulator';
-import { withStyles } from '@material-ui/core/styles';
-import SearchIcon from '@material-ui/icons/Search';
-import AccountCircle from '@material-ui/icons/AccountCircle';
-import ExitToApp from '@material-ui/icons/ExitToAppRounded';
-import TurnedIn from '@material-ui/icons/TurnedIn';
-import MoreIcon from '@material-ui/icons/MoreVert';
+import React from 'react'
+import AppBar from '@material-ui/core/AppBar'
+import Toolbar from '@material-ui/core/Toolbar'
+import IconButton from '@material-ui/core/IconButton'
+import InputBase from '@material-ui/core/InputBase'
+import Badge from '@material-ui/core/Badge'
+import MenuItem from '@material-ui/core/MenuItem'
+import Menu from '@material-ui/core/Menu'
+import { fade } from '@material-ui/core/styles/colorManipulator'
+import { withStyles } from '@material-ui/core/styles'
+import SearchIcon from '@material-ui/icons/Search'
+import AccountCircle from '@material-ui/icons/AccountCircle'
+import ExitToApp from '@material-ui/icons/ExitToAppRounded'
+import TurnedIn from '@material-ui/icons/TurnedIn'
+import MoreIcon from '@material-ui/icons/MoreVert'
 
-import { Redirect } from 'react-router-dom';
-import { withAuth } from '../AuthProvider';
-import { withDataPlaces } from '../PlacesProvider';
+import { Redirect, Link } from 'react-router-dom'
+import { withAuth } from '../AuthProvider'
+import { withDataPlaces } from '../PlacesProvider'
 
-import PropTypes from 'prop-types';
+import PropTypes from 'prop-types'
 
 
 const styles = theme => ({
@@ -89,39 +89,51 @@ const styles = theme => ({
       display: 'none',
     },
   },
-});
+  linkStyle : {
+    textDecoration:'none',
+    color: 'inherit'
+  },
+  linkMobileStyle : {
+    textDecoration:'none',
+    color: 'inherit'
+  },
+})
 
 class AppNavBar extends React.Component {
   state = {
     anchorEl: null,
     mobileMoreAnchorEl: null,
-  };
+  }
 
   handleProfileMenuOpen = event => {
-    this.setState({ anchorEl: event.currentTarget });
-  };
+    this.setState({ anchorEl: event.currentTarget })
+  }
 
   handleMenuClose = () => {
-    this.setState({ anchorEl: null });
-    this.handleMobileMenuClose();
-  };
+    this.setState({ anchorEl: null })
+    this.handleMobileMenuClose()
+  }
 
   handleMobileMenuOpen = event => {
-    this.setState({ mobileMoreAnchorEl: event.currentTarget });
-  };
+    this.setState({ mobileMoreAnchorEl: event.currentTarget })
+  }
 
   handleMobileMenuClose = () => {
-    this.setState({ mobileMoreAnchorEl: null });
-  };
+    this.setState({ mobileMoreAnchorEl: null })
+  }
+
+  componentDidMount = () => {
+
+  }
 
   render() {
-    const { anchorEl, mobileMoreAnchorEl } = this.state;
-    const { classes } = this.props;
-    const isMenuOpen = Boolean(anchorEl);
-    const isMobileMenuOpen = Boolean(mobileMoreAnchorEl);
+    const { anchorEl, mobileMoreAnchorEl } = this.state
+    const { classes } = this.props
+    const isMenuOpen = Boolean(anchorEl)
+    const isMobileMenuOpen = Boolean(mobileMoreAnchorEl)
 
-    const { isLogged, user, logout, userProfile, favoritesMe } = this.props;
-    const { username, favorites } = user;
+    const { isLogged, user, logout, userProfile, userFavorites } = this.props
+    const { username, favorites } = user
     if (isLogged) {
       const renderMobileMenu = (
         <Menu
@@ -131,19 +143,23 @@ class AppNavBar extends React.Component {
           open={isMobileMenuOpen}
           onClose={this.handleMobileMenuClose}
         >
-          <MenuItem onClick={favoritesMe}>
+          <MenuItem onClick={userFavorites}>
             <IconButton color="inherit">
+              <Link className={classes.linkMobileStyle} to='/favorites'>
               <Badge className={classes.margin} badgeContent={favorites.length} color="secondary">
                 <TurnedIn />
               </Badge>
+            </Link>
             </IconButton>
             <p>Fav</p>
           </MenuItem>
-          <MenuItem onClick={userProfile}>
-            <IconButton color="inherit">
-              <AccountCircle />
-            </IconButton>
-            <p>Profile</p>
+          <MenuItem onClick={userProfile} >
+            <Link className={classes.linkMobileStyle} to='/profile'>
+              <IconButton color="inherit">
+                <AccountCircle />
+                <p>Profile</p>
+              </IconButton>
+            </Link>
           </MenuItem>
           <MenuItem onClick={logout}>
             <IconButton color="inherit">
@@ -152,7 +168,7 @@ class AppNavBar extends React.Component {
             <p>LogOut</p>
           </MenuItem>
         </Menu>
-      );
+      )
 
     return (
         <div className={classes.menuBar}>
@@ -163,6 +179,7 @@ class AppNavBar extends React.Component {
                   <SearchIcon />
                 </div>
                 <InputBase
+                  onChange={this.props.handleSearch}
                   placeholder="Search…"
                   classes={{
                     root: classes.inputRoot,
@@ -172,19 +189,24 @@ class AppNavBar extends React.Component {
               </div>
               <div className={classes.grow} />
                 <div className={classes.sectionDesktop}>
-                  <IconButton onClick={favoritesMe} color="inherit">
-                    <Badge className={classes.margin} badgeContent={favorites.length} color="secondary">
-                      <TurnedIn />
-                    </Badge>
-                  </IconButton>
-                  <IconButton
-                    aria-owns={isMenuOpen ? 'material-appbar' : null}
-                    aria-haspopup="true"
-                    onClick={userProfile}
-                    color="inherit"
-                  >
-                  <AccountCircle />
-                  </IconButton>
+                  <Link className={classes.linkStyle} to='/favorites'>
+                    <IconButton onClick={userFavorites} color="inherit" >
+                      <Badge className={classes.margin} badgeContent={favorites.length} color="secondary">
+                        <TurnedIn />
+                      </Badge>
+                    </IconButton>
+                  </Link>
+                  <Link className={classes.linkStyle} to='/profile'>
+                    <IconButton
+                      aria-owns={isMenuOpen ? 'material-appbar' : null}
+                      aria-haspopup="true"
+                      onClick={userProfile}
+                      color="inherit"
+                      >
+                      <AccountCircle />
+                    </IconButton>
+                   </Link>
+
                   <IconButton
                     aria-owns={isMenuOpen ? 'material-appbar' : null}
                     aria-haspopup="true"
@@ -209,8 +231,11 @@ class AppNavBar extends React.Component {
       return(
         <div>
           <Redirect to='/login'></Redirect>
-          {/* <Link to='/login'>Login</Link>
-          <Link to='/signup'>Signup</Link> */}
+          {/*
+          <Redirect to='/profile'/>
+            <Link to='/login'>Login</Link>
+            <Link to='/signup'>Signup</Link>
+          */}
         </div>)
     }
   }
@@ -218,5 +243,5 @@ class AppNavBar extends React.Component {
 
 AppNavBar.propTypes = {
   classes: PropTypes.object.isRequired,
-};
-export default withAuth()(withDataPlaces()(withStyles(styles)(AppNavBar)));
+}
+export default withAuth()(withDataPlaces()(withStyles(styles)(AppNavBar)))

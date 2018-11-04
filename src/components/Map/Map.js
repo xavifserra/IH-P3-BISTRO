@@ -1,12 +1,16 @@
 import React, { PureComponent } from 'react';
 import ReactMapboxGl, { Layer, Feature, GeoJSONLayer } from "react-mapbox-gl";
+import { ScaleControl, Popup } from "react-mapbox-gl";
+
 import Paper from '@material-ui/core/Paper'
 import { withStyles } from '@material-ui/core/styles';
 
 // import { Link } from 'react-router-dom';
 import { withAuth } from '../AuthProvider';
 import { withDataPlaces } from '../PlacesProvider';
-// import { Form } from 'muicss/lib/react/form';
+
+// import 'mapbox-gl/dist/mapbox-gl.css';
+import './map.css'
 
 const stylePaper = theme => ({
   mapContainer: {
@@ -23,8 +27,8 @@ const stylePaper = theme => ({
 
 const MapReact = ReactMapboxGl({
   accessToken: process.env.REACT_APP_MAPBOX_API,// 'pk.eyJ1IjoieGF2aWZzIiwiYSI6ImNqa2ExZGpqdDIyMmwza3FsMWN6ODRkNGIifQ.NAa3sEP45u118hQ4btsCEw',
-  // minZoom: 15,
-  // maxZoom: 16,
+  //minZoom: 15,
+  //maxZoom: 17,
   scrollWheelZoom: false,
   dragRotate: false,
 })
@@ -36,13 +40,31 @@ class Map extends PureComponent {
     const {lng, lat} = this.props
     this.state = {
       center: [lng, lat],
-      zoom: [15],
+      zoom: [17],
       // geojson: geojson,
     };
   }
- componentDidMount(){
-    //this.props.locateMe()
- }
+  componentDidMount(){
+      //this.props.locateMe()
+  }
+  handleOnclick(e){
+    console.log(e);
+    const { lat, lng } = e.lngLat
+    console.log(lat,lng);
+   return (
+    <Popup
+      coordinates={[lng,lat]}
+      offset={{
+        'bottom-left': [12, -38],
+        'bottom': [0, -38],
+        'bottom-right': [-12, -38]
+      }}>
+      <h1>Popup</h1>
+    </Popup>)
+    //console.log(e._easeOptions.center);
+    // console.log(e.features[0].geometry.coordinates);
+    // alert(e.features[0].geometry.coordinates)
+  }
 
   render() {
     const { zoom, center } = this.state;
@@ -62,29 +84,38 @@ class Map extends PureComponent {
             height: "100%",
             width: "100%",
           }}
+          showCollisionBoxes= {true}
+          onDblClick= {this.handleOnclick}
         >
-        <Layer
-          type="symbol"
-          id="marker"
-          layout={{
-            "icon-size": 1,
-            "icon-image": "marker-15",
-            "text-anchor":"top-left",
-            "text-field": "you" }}>
-          <Feature coordinates={[lng, lat]}/>
-        </Layer>
-        <GeoJSONLayer
-          data={ geojson }
-          symbolLayout={{
-            "icon-image": "restaurant-15",
-            "icon-size": 1,
-            // "marker-color": "#944944" ,
-            "text-field": "{place}",
-            "text-font": ["Open Sans Semibold", "Arial Unicode MS Bold"],
-            "text-offset": [0, 0.6],
-            "text-anchor": "top"
-          }}/>
-      </MapReact>
+          <Layer
+            type="symbol"
+            id="marker"
+            layout={{
+              "icon-size": 1,
+              "icon-image": "marker-15",
+              "text-anchor":"top",
+              "text-font": ["Open Sans Semibold", "Arial Unicode MS Bold"],
+              "text-offset": [0, 0.6],
+              "text-field": "you" }}>
+            <Feature coordinates={[lng, lat]}/>
+          </Layer>
+          <GeoJSONLayer
+            data={ geojson }
+            symbolOnClick= {this.handleOnclick}
+            symbolLayout={{
+              "icon-image": "restaurant-15",
+              "icon-size": 1,
+              "text-field": "{place}",
+              "text-font": ["Open Sans Semibold", "Arial Unicode MS Bold"],
+              "text-offset": [0, 0.6],
+              "text-anchor": "top"
+            }}/>
+            <ScaleControl/>
+            <button class="mdl-button mdl-js-button mdl-button--fab mdl-js-ripple-effect mdl-button--colored">
+              <i class="material-icons">add</i>
+            </button>
+
+          </MapReact>
       </Paper>
     );
   }

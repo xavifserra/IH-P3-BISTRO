@@ -2,7 +2,6 @@ import React, { Component } from 'react'
 import auth from '../lib/auth-service';
 import CircularProgress  from '../components/Progress/CircularProgres';
 
-
 export const AuthContext = React.createContext(
   // authStore // default value
 );
@@ -21,6 +20,7 @@ export const withAuth = () => (Comp) => {
               logout={authStore.logout}
               setUser={authStore.setUser}
               userProfile={authStore.userProfile}
+              userFavorites={authStore.userFavorites}
               {...this.props} />
           }}
         </Consumer>
@@ -54,8 +54,14 @@ export default class AuthProvider extends Component {
       .catch( error => console.log(error))
   }
 
-  userProfile = () => {
-    return alert('user profile')
+  userProfile = (e) => {
+    console.log('Profile')
+    // e.preventDefault()
+  }
+
+  userFavorites = (e) => {
+    console.log('Favorites')
+    // e.preventDefault()
   }
 
   componentDidMount() {
@@ -89,7 +95,13 @@ export default class AuthProvider extends Component {
         </div>
       default:
         return (
-          <Provider value={{ isLogged, user, logout: this.logoutUser, setUser: this.setUser, userProfile: this.userProfile }}>
+          <Provider value={{
+            isLogged, user,
+            logout: this.logoutUser,
+            setUser: this.setUser,
+            userProfile: this.userProfile,
+            userFavorites: this.userFavorites
+          }}>
             {children}
           </Provider>
         );
