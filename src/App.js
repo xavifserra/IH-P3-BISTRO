@@ -21,9 +21,9 @@ class App extends Component {
           {/* <p>mode: {process.env.NODE_ENV}</p> */}
           <AppNavBar/>
           <Switch>
-        <PlacesProvider>
             <AnonRoute path="/signup" component={Signup} />
             <AnonRoute path="/login" component={Login} />
+        <PlacesProvider>
             <PrivateRoute path="/private" component={Private} />
             <PrivateRoute path="/profile" component={Profile} />
             <PrivateRoute path="/favorites" component={Favorites} />
