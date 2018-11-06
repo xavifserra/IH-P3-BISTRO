@@ -113,15 +113,15 @@ class Map extends PureComponent {
                 "text-anchor": "top"
               }}/>
             <ModalForm
-            title= 'new place'
-            classButtonShow="mdl-button mdl-js-button mdl-button--fab mdl-js-ripple-effect mdl-button--colored"
-            classButtonHide="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent"
-            textButtonShow="add"
-            styleButtonShow = {{
-              margin:"5px",
-              position:"relative",
-              float:"right"
-            }}
+              title= 'new place'
+              classButtonShow="mdl-button mdl-js-button mdl-button--fab mdl-js-ripple-effect mdl-button--colored"
+              classButtonHide="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent"
+              textButtonShow="add"
+              styleButtonShow = {{
+                margin:"5px",
+                position:"relative",
+                float:"right"
+              }}
             >
             <div><h1>test</h1></div>
             </ModalForm>
