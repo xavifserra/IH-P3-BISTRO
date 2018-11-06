@@ -87,8 +87,8 @@ export default class PlacesProvider extends Component {
     // }
   }
 
-   componentDidMount() {
-   // this.locateMe()
+   componentWillReceiveProps() {
+    this.locateMe()
   }
 
   render() {
