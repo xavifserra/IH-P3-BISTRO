@@ -1,6 +1,4 @@
 import React, { Component } from "react";
-import { withAuth } from '../AuthProvider';
-import { withDataPlaces } from '../PlacesProvider';
 import Modal from "./Modal";
 
 class ModalForm extends Component {

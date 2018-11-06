@@ -8,13 +8,14 @@
   background-size: cover;
 }
 .main-container > .mdl-card__title{
-  background-color: #3f51b5fe;
+  background-color: #46b5abfe;/*  #3f51b5fe; */
   width: 100%;
   justify-content: center;
+  border-radius: 5px 5px 0px 0px;
 }
 
 .main-container{
-  padding: 5%;
+  padding: 0%;
   justify-content: center;
   align-items: center;
   background-color:  #eeeeeecc;
@@ -23,4 +24,8 @@
 .form-group{
   /* border: 1px black solid; */
   padding: 5%;
+}
+
+.mdl-textfield__input{
+  background-color: whitesmoke !important;
 }

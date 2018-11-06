@@ -19,8 +19,8 @@ const stylePaper = theme => ({
     padding: theme.spacing.unit,
     height: "70vh",
     width: "93vw",
-    //marginLeft: theme.spacing.unit,
-    //marginRigth: theme.spacing.unit,
+    // marginLeft: theme.spacing.unit,
+    // marginRigth: theme.spacing.unit,
     // paddingTop: theme.spacing.unit * 2,
     // paddingBottom: theme.spacing.unit * 2,
   },
@@ -45,26 +45,30 @@ class Map extends PureComponent {
       // geojson: geojson,
     };
   }
-  componentDidMount(){
-      //this.props.locateMe()
-  }
-  handleOnclick(e){
+
+  onMapClick(map, e) {
     console.log(e);
-    const { lat, lng } = e.lngLat
-    console.log(lat,lng);
-   return (
-    <Popup
-      coordinates={[lng,lat]}
-      offset={{
-        'bottom-left': [12, -38],
-        'bottom': [0, -38],
-        'bottom-right': [-12, -38]
-      }}>
-      <h1>Popup</h1>
-    </Popup>)
-    //console.log(e._easeOptions.center);
-    // console.log(e.features[0].geometry.coordinates);
-    // alert(e.features[0].geometry.coordinates)
+    console.log(e.point);
+    console.log(e.lngLat);
+    const features = map.queryRenderedFeatures(e.point);
+    console.log(features)
+    const xCoordinate = e.lngLat.lng;
+    const yCoordinate = e.lngLat.lat;
+    const data = {
+      type: 'FeatureCollection',
+      features: [{
+        type: 'Feature',
+        geometry: {
+          type: 'Point',
+          coordinates: [yCoordinate, xCoordinate]
+        },
+        properties: {
+          title: features[0].properties.name,
+          description: features[0].properties.maki
+        }
+      }]
+    };
+    this.setState({geoJson: data});
   }
 
   render() {
@@ -86,7 +90,7 @@ class Map extends PureComponent {
           width: "100%",
         }}
         showCollisionBoxes= {true}
-        onDblClick= {this.handleOnclick}
+        onClick={(map, e) => this.onMapClick(map,e)}
         >
           <ScaleControl/>
           <Layer

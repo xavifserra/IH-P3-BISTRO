@@ -17,11 +17,12 @@
   top:50%;
   left:50%;
   transform: translate(-50%,-50%);
+  z-index: -2;
 }
 
 .display-block {
-  display: flex;
-  /* display: block; */
+  /* display: flex; */
+  display: block;
 }
 
 .display-none {
@@ -31,6 +32,6 @@
   position:relative;
   color: #aaaaaa;
   float: right;
-  font-size: 28px;
+  font-size: 15px;
   font-weight: bold;
 }

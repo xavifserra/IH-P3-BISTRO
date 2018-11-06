@@ -1,0 +1,30 @@
+.main-description{
+  border-radius: 5px;
+  background-color: rgb(252, 252, 248);
+
+  box-shadow: 5px;
+
+  display: flex;
+  display: -webkit-flex;
+  flex-wrap: nowrap;
+  flex-direction: row;
+  justify-content: space-around;
+  align-items: baseline;
+  /* align-content: center; */
+  border: solid 0.5px rgba(100, 148, 237, 0.075);
+}
+.distance{
+min-width: 10%;
+margin: 6px;
+flex: 0 0 auto;
+}
+.places{
+  min-width: 50%;
+  margin: 6px;
+  flex: 0 0 auto;
+}
+.social{
+  /* min-width: 10%; */
+  /* margin: 6px; */
+  /* //flex: 0 0 auto; */
+}

@@ -42,7 +42,7 @@ export default class PlacesProvider extends Component {
     if(navigator.geolocation){
       navigator.geolocation.getCurrentPosition((position) => {
 
-        var {latitude: lat, longitude: lng} = position.coords
+        const {latitude: lat, longitude: lng} = position.coords
         // test values. cerdanyola and ironhak
         // lng = 2.1454805 // 2.189978
         // lat = 41.4838637// 41.397779
@@ -66,14 +66,14 @@ export default class PlacesProvider extends Component {
               searchString: '',
               status:'loaded',
             })
-            return console.log(error)
+            return Error('Server connection lost')
           })
       })
     }
   }
 
   handleSearch = (e) =>{
-    console.log(e);
+   // console.log(e);
 
     this.setState({
       searchString : e.target.value
@@ -81,12 +81,14 @@ export default class PlacesProvider extends Component {
   }
 
   getCoordinates = (e) => {
-    alert(e.target.value)
+    console.log(e.target.value)
+    // if(navigator.geolocation){
+    //   return navigator.geolocation.getCurrentPosition(({coords}) => coords }
+    // }
   }
 
    componentDidMount() {
     this.locateMe()
-
   }
 
   render() {

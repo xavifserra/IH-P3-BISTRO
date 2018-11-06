@@ -1,4 +1,6 @@
 import React from 'react'
+import { Redirect, Link } from 'react-router-dom'
+
 import AppBar from '@material-ui/core/AppBar'
 import Toolbar from '@material-ui/core/Toolbar'
 import IconButton from '@material-ui/core/IconButton'
@@ -14,12 +16,10 @@ import ExitToApp from '@material-ui/icons/ExitToAppRounded'
 import TurnedIn from '@material-ui/icons/TurnedIn'
 import MoreIcon from '@material-ui/icons/MoreVert'
 
-import { Redirect, Link } from 'react-router-dom'
 import { withAuth } from '../AuthProvider'
 import { withDataPlaces } from '../PlacesProvider'
 
 import PropTypes from 'prop-types'
-
 
 const styles = theme => ({
   menuBar: {
@@ -144,12 +144,12 @@ class AppNavBar extends React.Component {
           onClose={this.handleMobileMenuClose}
         >
           <MenuItem onClick={userFavorites}>
-            <IconButton color="inherit">
-              <Link className={classes.linkMobileStyle} to='/favorites'>
+            <IconButton color="inherit" >
+              {/* <Link className={classes.linkMobileStyle} to='/favorites'> */}
               <Badge className={classes.margin} badgeContent={favorites.length} color="secondary">
                 <TurnedIn />
               </Badge>
-            </Link>
+            {/* </Link> */}
             </IconButton>
             <p>Fav</p>
           </MenuItem>
