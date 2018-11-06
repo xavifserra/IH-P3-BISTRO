@@ -130,7 +130,6 @@ class Map extends PureComponent {
             <div><h1>test</h1></div>
             </ModalForm>
           </MapReact>
-
       </Paper>
     );
   }
