@@ -19,16 +19,16 @@ class App extends Component {
     return (
       <AuthProvider>
           {/* <p>mode: {process.env.NODE_ENV}</p> */}
+        <PlacesProvider>
           <AppNavBar/>
           <Switch>
             <AnonRoute path="/signup" component={Signup} />
             <AnonRoute path="/login" component={Login} />
-        <PlacesProvider>
             <PrivateRoute path="/private" component={Private} />
             <PrivateRoute path="/profile" component={Profile} />
             <PrivateRoute path="/favorites" component={Favorites} />
-        </PlacesProvider>
           </Switch>
+        </PlacesProvider>
       </AuthProvider>
     )
   }
