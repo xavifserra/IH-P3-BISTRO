@@ -18,8 +18,8 @@ class App extends Component {
   render() {
     return (
       <AuthProvider>
-          {/* <p>mode: {process.env.NODE_ENV}</p> */}
         <PlacesProvider>
+          {/* <p>mode: {process.env.NODE_ENV}</p> */}
           <AppNavBar/>
           <Switch>
             <AnonRoute path="/signup" component={Signup} />

@@ -7,6 +7,7 @@ import { withStyles } from '@material-ui/core/styles';
 
 import Map from '../components/Map/Map';
 import ListPlaces from '../components/ListPlaces/ListPlaces';
+import { div } from 'gl-matrix/src/gl-matrix/vec4';
 
 const stylePaper = theme => ({
   detailContainer: {
@@ -25,29 +26,30 @@ const stylePaper = theme => ({
 class Private extends Component {
 
   componentWillReceiveProps(){
-    if (!this.props.geojson.length>0) this.props.locateMe()
+    if (this.props.geojson.length<0) this.props.locateMe()
   }
 
   render() {
     // const { user } = this.props
     const { classes, searchString } = this.props;
-    // console.log(this.props);
+    console.log(classes);
 
     return (
      <div>
       <Map/>
       <br/>
-      {searchString}
+      <div>
+      {/* {searchString} */}
+      </div>
       {
         this.props.geojson.features.map((element) => {
+          const {_id} = element.properties
           console.log(element)
-          console.log(element.properties.place.includes(searchString))
-          console.log(element.properties.place.includes(searchString)|| !searchString ? true : false)
-          return(
-          <ListPlaces
-            data={element}
-          />
-          )
+          console.log(_id)
+          if (element.properties.place.includes(searchString))
+            return(
+            <ListPlaces key={_id} data={element} />
+            )
         })
       }
       <br/>

@@ -1,9 +1,9 @@
 import React from 'react';
 import { Formik, Form, Field } from 'formik';
 import * as Yup from 'yup';
-import withAuth from '../components/AnonRoute';
 
 // import './styles/profile.css'
+import { withAuth } from '../components/AuthProvider';
 
 const style={
   input: {
@@ -74,4 +74,4 @@ const Profile = () => (
   </div>
 );
 
-export default (Profile)
+export default withAuth(Profile)

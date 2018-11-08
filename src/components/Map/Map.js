@@ -1,6 +1,6 @@
 import React, { PureComponent } from 'react';
 import ReactMapboxGl, { Layer, Feature, GeoJSONLayer } from "react-mapbox-gl";
-import { ScaleControl, Popup } from "react-mapbox-gl";
+import { ScaleControl } from "react-mapbox-gl";
 
 import Paper from '@material-ui/core/Paper'
 import { withStyles } from '@material-ui/core/styles';
@@ -73,8 +73,6 @@ class Map extends PureComponent {
 
   render() {
     const { zoom, center } = this.state;
-    // const { isLogged, user, logout } = this.props;
-    // const { username } = user;
     const { classes, lat, lng, geojson } = this.props;
     return (
       <Paper className={classes.mapContainer}>

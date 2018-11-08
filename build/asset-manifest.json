@@ -1,16 +1,16 @@
 {
-  "main.css": "/static/css/main.83a0b1e5.chunk.css",
-  "main.js": "/static/js/main.5e3e6d70.chunk.js",
-  "main.js.map": "/static/js/main.5e3e6d70.chunk.js.map",
+  "main.css": "/static/css/main.4d57c8cb.chunk.css",
+  "main.js": "/static/js/main.3d15f42f.chunk.js",
+  "main.js.map": "/static/js/main.3d15f42f.chunk.js.map",
   "static/css/1.37f9039e.chunk.css": "/static/css/1.37f9039e.chunk.css",
-  "static/js/1.8292c663.chunk.js": "/static/js/1.8292c663.chunk.js",
-  "static/js/1.8292c663.chunk.js.map": "/static/js/1.8292c663.chunk.js.map",
+  "static/js/1.0ec1f88c.chunk.js": "/static/js/1.0ec1f88c.chunk.js",
+  "static/js/1.0ec1f88c.chunk.js.map": "/static/js/1.0ec1f88c.chunk.js.map",
   "runtime~main.js": "/static/js/runtime~main.229c360f.js",
   "runtime~main.js.map": "/static/js/runtime~main.229c360f.js.map",
-  "static/css/main.83a0b1e5.chunk.css.map": "/static/css/main.83a0b1e5.chunk.css.map",
+  "static/css/main.4d57c8cb.chunk.css.map": "/static/css/main.4d57c8cb.chunk.css.map",
   "static/media/access.css": "/static/media/gor-davtyan-725321-unsplash.6c7df78b.jpg",
   "static/css/1.37f9039e.chunk.css.map": "/static/css/1.37f9039e.chunk.css.map",
   "index.html": "/index.html",
-  "precache-manifest.76a4818cfff0fcd90f64f80a12f558af.js": "/precache-manifest.76a4818cfff0fcd90f64f80a12f558af.js",
+  "precache-manifest.41ea6d41d471cb9dbea89c82b0725756.js": "/precache-manifest.41ea6d41d471cb9dbea89c82b0725756.js",
   "service-worker.js": "/service-worker.js"
 }

@@ -1,6 +1,8 @@
 import React, { Component } from 'react'
 import places from '../lib/places-service';
 import LinearProgress  from '../components/Progress/LinearProgress';
+import { withAuth } from './AuthProvider';
+import auth from '../lib/auth-service';
 
 export const PlacesContext = React.createContext(
    // places.getAroundGeoJSON() // default value
@@ -21,6 +23,7 @@ export const withDataPlaces = () => (Comp) => {
             searchString = { placeStore.searchString }
             locateMe = { placeStore.locateMe}
             handleSearch = {placeStore.handleSearch}
+            userFavorite = {placeStore.userFavorite}
             {...this.props} />
           }}
         </Consumer>
@@ -29,7 +32,7 @@ export const withDataPlaces = () => (Comp) => {
   }
 }
 
-export default class PlacesProvider extends Component {
+export default withAuth()(class PlacesProvider extends Component {
   state = {
     lng: 0,
     lat: 0,
@@ -44,8 +47,8 @@ export default class PlacesProvider extends Component {
 
         const {latitude: lat, longitude: lng} = position.coords
         // test values. cerdanyola and ironhak
-        // lng = 2.1454805 // 2.189978
-        // lat = 41.4838637// 41.397779
+        //        lng = 2.1454805  //  2.189978
+        //        lat = 41.4838637 //  41.397779
 
          places.getAroundGeoJSON(lat, lng, 1000 )
           .then((data) => {
@@ -73,7 +76,7 @@ export default class PlacesProvider extends Component {
   }
 
   handleSearch = (e) =>{
-   // console.log(e);
+    console.log(e.target.value);
 
     this.setState({
       searchString : e.target.value
@@ -87,8 +90,18 @@ export default class PlacesProvider extends Component {
     // }
   }
 
-   componentWillReceiveProps() {
-    this.locateMe()
+  userFavorite = (e) => {
+    console.log(e)
+    const {userId, placeId, favoriteEnbled} = e
+    !favoriteEnbled ?  places.putFavorite(userId, placeId): places.removeFavorite(userId, placeId)
+    this.props.refreshUser()
+
+    // console.log(e.ctrlKey)
+    // e.preventDefault()
+  }
+  
+   componentWillMount() {
+   this.locateMe()
   }
 
   render() {
@@ -97,12 +110,12 @@ export default class PlacesProvider extends Component {
     // console.log({ geojson, lat, lng,  status } );
     switch (status) {
       case 'loading':
-        return <div>
+        return (<div>
           <center>
             <LinearProgress/>
             loading places...
           </center>
-          </div>
+          </div>)
       default:
         return (
           <Provider value={
@@ -112,6 +125,7 @@ export default class PlacesProvider extends Component {
               searchString,
               handleSearch: this.handleSearch,
               locateMe:this.locateMe,
+              userFavorite : this.userFavorite,
             } }>
             {children}
           </Provider>
@@ -119,3 +133,4 @@ export default class PlacesProvider extends Component {
     }
   }
 }
+)

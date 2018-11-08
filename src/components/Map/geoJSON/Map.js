@@ -71,8 +71,6 @@ class Map extends PureComponent {
 
   render() {
     const { zoom, center } = this.state;
-    // const { isLogged, user, logout } = this.props;
-    // const { username } = user;
     const { classes, lat, lng, geojson } = this.props;
     return (
       <Paper className={classes.mapContainer}>

@@ -19,8 +19,6 @@ import MoreIcon from '@material-ui/icons/MoreVert'
 import { withAuth } from '../AuthProvider'
 import { withDataPlaces } from '../PlacesProvider'
 
-import PropTypes from 'prop-types'
-
 const styles = theme => ({
   menuBar: {
     width: '100%',
@@ -122,10 +120,6 @@ class AppNavBar extends React.Component {
     this.setState({ mobileMoreAnchorEl: null })
   }
 
-  componentDidMount = () => {
-
-  }
-
   render() {
     const { anchorEl, mobileMoreAnchorEl } = this.state
     const { classes } = this.props
@@ -134,6 +128,7 @@ class AppNavBar extends React.Component {
 
     const { isLogged, user, logout, userProfile, userFavorites } = this.props
     const { username, favorites } = user
+    // console.log('userIsLogged:',isLogged);
     if (isLogged) {
       const renderMobileMenu = (
         <Menu
@@ -145,11 +140,11 @@ class AppNavBar extends React.Component {
         >
           <MenuItem onClick={userFavorites}>
             <IconButton color="inherit" >
-              {/* <Link className={classes.linkMobileStyle} to='/favorites'> */}
+              <Link className={classes.linkMobileStyle} to='/favorites'>
               <Badge className={classes.margin} badgeContent={favorites.length} color="secondary">
                 <TurnedIn />
               </Badge>
-            {/* </Link> */}
+            </Link>
             </IconButton>
             <p>Fav</p>
           </MenuItem>
@@ -241,7 +236,4 @@ class AppNavBar extends React.Component {
   }
 }
 
-AppNavBar.propTypes = {
-  classes: PropTypes.object.isRequired,
-}
 export default withAuth()(withDataPlaces()(withStyles(styles)(AppNavBar)))

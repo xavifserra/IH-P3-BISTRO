@@ -20,7 +20,7 @@ export const withAuth = () => (Comp) => {
               logout={authStore.logout}
               setUser={authStore.setUser}
               userProfile={authStore.userProfile}
-              userFavorites={authStore.userFavorites}
+              refreshUser={authStore.refreshUser}
               {...this.props} />
           }}
         </Consumer>
@@ -43,6 +43,24 @@ export default class AuthProvider extends Component {
     })
   }
 
+  refreshUser = () => {
+    auth.me()
+    .then((user) => {
+      this.setState({
+        isLogged: true,
+        user,
+        status: 'loaded'
+      })
+    })
+    .catch((error) => {
+      this.setState({
+        isLogged: false,
+        user: {},
+        status: 'loaded'
+      });
+    })
+  }
+
   logoutUser = () =>{
     auth.logout()
       .then(() => {
@@ -55,12 +73,7 @@ export default class AuthProvider extends Component {
   }
 
   userProfile = (e) => {
-    console.log('Profile')
-    // e.preventDefault()
-  }
-
-  userFavorites = (e) => {
-    console.log('Favorites')
+    console.log(e)
     // e.preventDefault()
   }
 
@@ -100,7 +113,7 @@ export default class AuthProvider extends Component {
             logout: this.logoutUser,
             setUser: this.setUser,
             userProfile: this.userProfile,
-            userFavorites: this.userFavorites
+            refreshUser: this.refreshUser,
           }}>
             {children}
           </Provider>

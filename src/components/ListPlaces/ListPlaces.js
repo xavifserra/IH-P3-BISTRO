@@ -4,7 +4,6 @@ import { withAuth } from '../AuthProvider';
 import { withDataPlaces } from '../PlacesProvider';
 
 import './ListPlaces.css'
-import { div } from 'gl-matrix/src/gl-matrix/vec4';
 class ListPlaces extends Component {
 
   render() {
@@ -23,7 +22,11 @@ class ListPlaces extends Component {
       lng,
       searchString,
     } = this.props.data.properties
-console.log(this.props.data);
+    // console.log(this.props);
+    const {_id:userId, favorites} = this.props.user
+    const favoriteEnbled = favorites.some(e => e._id===placeId)
+
+    // console.log('fav:',placeId, favorites, favoriteEnbled);
     return (
     <div>
       <div className='mdl-layout main-description'>
@@ -33,12 +36,17 @@ console.log(this.props.data);
         <div className="places">
           <h5 >{place}</h5>
         </div>
-        <div className="social">
-          <i className="material-icons">favorite_border</i>
-        </div>
-        <div class="social material-icons" >ac_unit</div>
-        <div class="social material-icons mdl-badge mdl-badge--overlap" data-badge="1">account_box</div>
-        <div class="social material-icons mdl-badge mdl-badge--overlap" data-badge="1">account_box</div>
+        <dir className="social">
+          <div className="material-icons" >ac_unit</div>
+          <div className="material-icons" >wifi</div>
+          <div className="material-icons" >account_box</div>
+          <div className="material-icons" >credit_card</div>
+          <div className="material-icons"
+             onClick={e=>this.props.userFavorite({userId, placeId, favoriteEnbled})}>
+             {favoriteEnbled?'favorite':'favorite_border'}
+          </div>
+          <div className="material-icons" >edit</div>
+        </dir>
 
         {/* <fieldset>
           <p>{searchString}</p>
@@ -65,4 +73,4 @@ console.log(this.props.data);
   }
 }
 
-export default ListPlaces
+export default withAuth()(withDataPlaces()(ListPlaces))
