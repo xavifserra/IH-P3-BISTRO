@@ -17,7 +17,6 @@ import TurnedIn from '@material-ui/icons/TurnedIn'
 import MoreIcon from '@material-ui/icons/MoreVert'
 
 import { withAuth } from '../AuthProvider'
-import { withDataPlaces } from '../PlacesProvider'
 
 const styles = theme => ({
   menuBar: {
@@ -236,4 +235,4 @@ class AppNavBar extends React.Component {
   }
 }
 
-export default withAuth()(withDataPlaces()(withStyles(styles)(AppNavBar)))
+export default withAuth()(withStyles(styles)(AppNavBar))

@@ -5,7 +5,6 @@ import PrivateRoute from './components/PrivateRoute'
 import AnonRoute from './components/AnonRoute'
 import AppNavBar  from './components/AppNavBar/AppNavBar'
 import AuthProvider from './components/AuthProvider'
-import PlacesProvider from './components/PlacesProvider'
 
 import Private from './pages/Private'
 import Signup from './pages/Signup'
@@ -18,7 +17,6 @@ class App extends Component {
   render() {
     return (
       <AuthProvider>
-        <PlacesProvider>
           {/* <p>mode: {process.env.NODE_ENV}</p> */}
           <AppNavBar/>
           <Switch>
@@ -28,7 +26,6 @@ class App extends Component {
             <PrivateRoute path="/profile" component={Profile} />
             <PrivateRoute path="/favorites" component={Favorites} />
           </Switch>
-        </PlacesProvider>
       </AuthProvider>
     )
   }

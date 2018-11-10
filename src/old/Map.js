@@ -3,7 +3,6 @@ import ReactMapboxGl, { Layer, Feature, GeoJSONLayer, Popup } from "react-mapbox
 
 // import { Link } from 'react-router-dom';
 import { withAuth } from '../AuthProvider';
-import { withDataPlaces } from '../PlacesProvider';
 
 import { Paper } from '@material-ui/core';
 import { withStyles } from '@material-ui/core/styles';
@@ -115,4 +114,4 @@ class Map extends PureComponent {
   }
 };
 
-export default withAuth()(withDataPlaces()(withStyles(stylePaper)(Map)));
+export default withAuth()(withStyles(stylePaper)(Map))

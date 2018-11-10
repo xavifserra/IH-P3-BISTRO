@@ -1,8 +1,8 @@
 import React, { Component } from 'react'
-import places from '../lib/places-service';
-import LinearProgress  from '../components/Progress/LinearProgress';
-import { withAuth } from './AuthProvider';
-import auth from '../lib/auth-service';
+import places from '../../../lib/places-service';
+import LinearProgress  from '../LinearProgress';
+import { withAuth } from '../../AuthProvider';
+import auth from '../../../lib/auth-service';
 
 export const PlacesContext = React.createContext(
    // places.getAroundGeoJSON() // default value
@@ -32,7 +32,7 @@ export const withDataPlaces = () => (Comp) => {
   }
 }
 
-export default withAuth()(class PlacesProvider extends Component {
+export default class PlacesProvider extends Component {
   state = {
     lng: 0,
     lat: 0,
@@ -99,7 +99,7 @@ export default withAuth()(class PlacesProvider extends Component {
     // console.log(e.ctrlKey)
     // e.preventDefault()
   }
-  
+
    componentWillMount() {
    this.locateMe()
   }
@@ -133,4 +133,3 @@ export default withAuth()(class PlacesProvider extends Component {
     }
   }
 }
-)

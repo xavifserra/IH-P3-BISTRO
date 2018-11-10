@@ -1,7 +1,7 @@
-import React, { Component } from 'react';
-import auth from '../lib/auth-service';
+import React, { Component } from 'react'
+import auth from '../lib/auth-service'
 
-import { Link } from 'react-router-dom';
+import { Link } from 'react-router-dom'
 
 import './styles/access.css'
 class Login extends Component {
@@ -11,7 +11,7 @@ class Login extends Component {
   }
 
   handleFormSubmit = (event) => {
-    event.preventDefault();
+    event.preventDefault()
     const { username, password } = this.state
 
     auth.login({ username, password })
@@ -22,12 +22,12 @@ class Login extends Component {
   }
 
   handleChange = (event) => {
-    const {name, value} = event.target;
-    this.setState({[name]: value});
+    const {name, value} = event.target
+    this.setState({[name]: value})
   }
 
   render() {
-    const { username, password } = this.state;
+    const { username, password } = this.state
 
     return (
 
@@ -43,7 +43,7 @@ class Login extends Component {
         <label>Password:</label>
         <input className="mdl-textfield__input" type="password" name="password" value={password} onChange={this.handleChange} />
 
-        <div class="mdl-card__supporting-text">
+        <div className="mdl-card__supporting-text">
           New user? Sign up to create your account
             <Link to={"/signup"}> SignUp</Link>
         </div>
@@ -58,4 +58,4 @@ class Login extends Component {
   }
 }
 
-export default Login;
+export default Login

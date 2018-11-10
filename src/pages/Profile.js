@@ -1,9 +1,11 @@
-import React from 'react';
-import { Formik, Form, Field } from 'formik';
-import * as Yup from 'yup';
+import React from 'react'
+import { Link } from 'react-router-dom';
+import { Formik, Form, Field, Label } from 'formik'
+import * as Yup from 'yup'
+
 
 // import './styles/profile.css'
-import { withAuth } from '../components/AuthProvider';
+import { withAuth } from '../components/AuthProvider'
 
 const style={
   input: {
@@ -32,7 +34,7 @@ const SignupSchema = Yup.object().shape({
   email: Yup.string()
     .email('Invalid email')
     .required('Required'),
-});
+})
 
 const Profile = () => (
   <div>
@@ -51,11 +53,12 @@ const Profile = () => (
       validationSchema={SignupSchema}
       onSubmit={values => {
         // same shape as initial values
-        console.log(values);
+        console.log(values)
       }}
     >
       {({ errors, touched }) => (
         <Form>
+          <label>Name</label>
           <Field name="name" style={style.input}/>
           {errors.name && touched.name ? ( <div>{errors.name}</div> ) : null}
           <Field name="lastName" style={style.input}/>
@@ -65,13 +68,14 @@ const Profile = () => (
           <Field name="languages" type="languages" style={style.input}/>
           <Field name="favorites" type="favorites" style={style.input}/>
           <Field name="comments" type="comments" style={style.input}/>
-          <Field name="following" type="followinf" style={style.input}/>
+          <Field name="following" type="following" style={style.input}/>
 
-          <button type="submit">Submit</button>
+          <button className="mdl-button mdl-js-button mdl-button--raised mdl-button--colored" type="submit">Submit</button>
+          <Link className="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent" to="/private">Cancel</Link>
         </Form>
       )}
     </Formik>
   </div>
-);
+)
 
-export default withAuth(Profile)
+export default Profile

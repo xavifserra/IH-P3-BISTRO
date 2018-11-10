@@ -1,34 +1,58 @@
 
-import React, { Component } from 'react';
-import { withAuth } from '../AuthProvider';
-import { withDataPlaces } from '../PlacesProvider';
+import React, { Component } from 'react'
 
 import './ListPlaces.css'
 class ListPlaces extends Component {
+
+  state={
+    showDetails:false,
+  }
+
+  handleDetails= () => {
+    const newState= !this.state.showDetails
+    this.setState({
+      showDetails: (newState)
+    })
+  }
+  changeStateOfFavorite = () => {
+    this.props.userFavorite(
+      {
+        placeId:this.props.data.properties._id,
+        actualState:this.props.favoriteIsEnabled,
+      })
+    }
 
   render() {
     const {
       _id:placeId,
       place,
+      distance,
       address,
       category,
       location ,
       numReviews,
       reviews,
       details,
-      distance,
       polarity,
       lat,
       lng,
-      searchString,
+      owner,
     } = this.props.data.properties
-    // console.log(this.props);
-    const {_id:userId, favorites} = this.props.user
-    const favoriteEnbled = favorites.some(e => e._id===placeId)
 
-    // console.log('fav:',placeId, favorites, favoriteEnbled);
+    const {
+      airConditioned,
+      fidelityCard,
+      ticketRestaurant,
+      chequeGourmet,
+      wifi,
+      movileCoverage,
+      pets,
+      adapted,
+    } = this.props.services;
+    console.log(this.props);
     return (
     <div>
+      {/* {placeId} */}
       <div className='mdl-layout main-description'>
         <div className="distance">
           <p>{distance} km</p>
@@ -36,41 +60,56 @@ class ListPlaces extends Component {
         <div className="places">
           <h5 >{place}</h5>
         </div>
-        <dir className="social">
-          <div className="material-icons" >ac_unit</div>
-          <div className="material-icons" >wifi</div>
-          <div className="material-icons" >account_box</div>
-          <div className="material-icons" >credit_card</div>
-          <div className="material-icons"
-             onClick={e=>this.props.userFavorite({userId, placeId, favoriteEnbled})}>
-             {favoriteEnbled?'favorite':'favorite_border'}
-          </div>
-          <div className="material-icons" >edit</div>
-        </dir>
 
-        {/* <fieldset>
-          <p>{searchString}</p>
-          <h2>{address}</h2>
-          <h4>{reviews}</h4>
-          <p>{address}</p>
-          <p>{distance}</p>
-          <p className='icon trash' />
-          </fieldset>
-          <fieldset className='hide-mobile'>
-          <label >{category}</label>
-          <label >{location }</label>
-          <label>{numReviews}</label>
-          <label >{reviews}</label>
-          <label >{details}</label>
-          <label >{polarity}</label>
-          <label >{lat}</label>
-          <label >{lng}</label>
-        </fieldset> */}
+        <div className="social">
+          <div className="material-icons">{airConditioned?"ac_unit":null}</div>
+          <div className="material-icons">{fidelityCard?"card_giftcard":null}</div>
+          <div className="material-icons">{ticketRestaurant?"credit_card":null}</div>
+          <div className="material-icons">{chequeGourmet?"card_membership":null}</div>
+          <div className="material-icons">{adapted?"accessible":null}</div>
+          <div className="material-icons">{wifi?"wifi":null}</div>
+          <div className="material-icons">{movileCoverage?"signal_cellular_alt":null}</div>
+          <div className="material-icons">{pets?"pets":null}</div>
+        </div>
+        <div className="manage">
+          <div className="material-icons"
+            onClick={this.props.editPlace}>
+            {owner===this.props.user._id?"edit":null}
+          </div>
+          <div className="material-icons"
+             onClick={this.changeStateOfFavorite}>
+             {this.props.favoriteIsEnabled ? 'favorite':'favorite_border'}
+          </div>
+          <div className="material-icons"
+            onClick={this.handleDetails}>
+            {this.state.showDetails?"expand_less":"expand_more"}
+          </div>
+        </div>
         <br/>
+
+        {this.state.showDetails &&
+          <div className='mdl-layout main-description'>
+              <p>{this.props.user._id} </p>
+            <p>{address}</p>
+            <p>{reviews}</p>
+            <div className='material-icons' />
+
+            <div className='mdl-layout main-description'>
+              <label >{category}</label>
+              <label >{location }</label>
+              <label>{numReviews}</label>
+              <label >{reviews}</label>
+              <label >{details}</label>
+              <label >{polarity}</label>
+              <label >{lat}</label>
+              <label >{lng}</label>
+            </div>
+          </div>
+        }
       </div>
-      </div>
+    </div>
     )
   }
 }
 
-export default withAuth()(withDataPlaces()(ListPlaces))
+export default ListPlaces

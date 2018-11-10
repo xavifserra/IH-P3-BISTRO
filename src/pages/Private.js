@@ -1,13 +1,10 @@
 import React, { Component } from 'react'
 
-import { withAuth } from '../components/AuthProvider';
-import { withDataPlaces } from '../components/PlacesProvider'
+import { withStyles } from '@material-ui/core/styles'
+import { withAuth } from '../components/AuthProvider'
 
-import { withStyles } from '@material-ui/core/styles';
-
-import Map from '../components/Map/Map';
-import ListPlaces from '../components/ListPlaces/ListPlaces';
-import { div } from 'gl-matrix/src/gl-matrix/vec4';
+import Map from '../components/Map/Map'
+import ListPlaces from '../components/ListPlaces/ListPlaces'
 
 const stylePaper = theme => ({
   detailContainer: {
@@ -20,7 +17,7 @@ const stylePaper = theme => ({
     // paddingTop: theme.spacing.unit * 2,
     // paddingBottom: theme.spacing.unit * 2,
   },
-});
+})
 
 
 class Private extends Component {
@@ -30,31 +27,37 @@ class Private extends Component {
   }
 
   render() {
-    // const { user } = this.props
-    const { classes, searchString } = this.props;
-    console.log(classes);
+    const { user, searchString, geojson, userFavorite } = this.props
+    const { features } = geojson
 
     return (
      <div>
       <Map/>
       <br/>
-      <div>
-      {/* {searchString} */}
-      </div>
       {
-        this.props.geojson.features.map((element) => {
-          const {_id} = element.properties
-          console.log(element)
-          console.log(_id)
-          if (element.properties.place.includes(searchString))
+        // eslint-disable-next-line array-callback-return
+        features.map((element) => {
+          const {_id, services, place} = element.properties
+          if (place.includes(searchString.toLowerCase())){
+            // console.log(_id, user.favorites.some(e => {
+            //   console.log(e,"<=>",_id);
+            //   return e===_id}))
+
             return(
-            <ListPlaces key={_id} data={element} />
-            )
+            <ListPlaces
+              key={_id}
+              data={element}
+              user={user}
+              userFavorite={userFavorite}
+              favoriteIsEnabled={user.favorites.some(e => e===_id)}
+              services={services}
+            />
+            )}
         })
       }
       <br/>
-      </div>
+    </div>
   )}
 }
 
-export default withAuth()(withDataPlaces()(withStyles(stylePaper)(Private)));
+export default withAuth()(withStyles(stylePaper)(Private))

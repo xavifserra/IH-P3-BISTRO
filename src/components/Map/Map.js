@@ -1,16 +1,14 @@
-import React, { PureComponent } from 'react';
-import ReactMapboxGl, { Layer, Feature, GeoJSONLayer } from "react-mapbox-gl";
-import { ScaleControl } from "react-mapbox-gl";
+import React, { PureComponent } from 'react'
+import ReactMapboxGl, { Layer, Feature, GeoJSONLayer, ScaleControl } from "react-mapbox-gl"
 
 import Paper from '@material-ui/core/Paper'
-import { withStyles } from '@material-ui/core/styles';
+import { withStyles } from '@material-ui/core/styles'
 
-// import { Link } from 'react-router-dom';
-import { withAuth } from '../AuthProvider';
-import { withDataPlaces } from '../PlacesProvider';
-import ModalForm from '../Modal/ModalForm';
+// import { Link } from 'react-router-dom'
+import { withAuth } from '../AuthProvider'
+import ModalForm from '../Modal/ModalForm'
 
-// import 'mapbox-gl/dist/mapbox-gl.css';
+// import 'mapbox-gl/dist/mapbox-gl.css'
 // import './map.css'
 
 const stylePaper = theme => ({
@@ -24,7 +22,7 @@ const stylePaper = theme => ({
     // paddingTop: theme.spacing.unit * 2,
     // paddingBottom: theme.spacing.unit * 2,
   },
-});
+})
 
 const MapReact = ReactMapboxGl({
   accessToken: process.env.REACT_APP_MAPBOX_API,// 'pk.eyJ1IjoieGF2aWZzIiwiYSI6ImNqa2ExZGpqdDIyMmwza3FsMWN6ODRkNGIifQ.NAa3sEP45u118hQ4btsCEw',
@@ -37,23 +35,23 @@ const MapReact = ReactMapboxGl({
 class Map extends PureComponent {
 
   constructor(props) {
-    super(props);
+    super(props)
     const {lng, lat} = this.props
     this.state = {
       center: [lng, lat],
       zoom: [17],
       // geojson: geojson,
-    };
+    }
   }
 
   onMapClick(map, e) {
-    console.log(e);
-    console.log(e.point);
-    console.log(e.lngLat);
-    const features = map.queryRenderedFeatures(e.point);
+    console.log(e)
+    console.log(e.point)
+    console.log(e.lngLat)
+    const features = map.queryRenderedFeatures(e.point)
     console.log(features)
-    const xCoordinate = e.lngLat.lng;
-    const yCoordinate = e.lngLat.lat;
+    const xCoordinate = e.lngLat.lng
+    const yCoordinate = e.lngLat.lat
     const data = {
       type: 'FeatureCollection',
       features: [{
@@ -67,13 +65,13 @@ class Map extends PureComponent {
           description: features[0].properties.maki
         }
       }]
-    };
-    this.setState({geoJson: data});
+    }
+    this.setState({geoJson: data})
   }
 
   render() {
-    const { zoom, center } = this.state;
-    const { classes, lat, lng, geojson } = this.props;
+    const { zoom, center } = this.state
+    const { classes, lat, lng, geojson } = this.props
     return (
       <Paper className={classes.mapContainer}>
         <MapReact
@@ -129,8 +127,8 @@ class Map extends PureComponent {
             </ModalForm>
           </MapReact>
       </Paper>
-    );
+    )
   }
-};
+}
 
-export default withAuth()(withDataPlaces()(withStyles(stylePaper)(Map)));
+export default withAuth()(withStyles(stylePaper)(Map))

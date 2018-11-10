@@ -1,5 +1,4 @@
 import axios from 'axios';
-import auth from '../lib/auth-service';
 
 class Places {
   constructor() {
@@ -13,29 +12,27 @@ class Places {
     })
   }
 
-   getAroundGeoJSON(lat, lng, dist) {
+  getAroundGeoJSON = (lat, lng, dist) => {
     return this.places.get(`/api/v1/places/aroundGeoJSON?lat=${lat}&lng=${lng}&dist=${dist}`)
     .then(({ data }) => {
-      // console.log({ lat, lng, dist ,data });
       return data
     })
   }
 
-  putFavorite(userId, placeId) {
-    alert('put', userId, placeId)
+  putFavorite = (placeId) => {
+    // alert('put', userId, placeId)
     return this.places.put(`/api/v1/me/favorite/${placeId}`)
     .then(({ data }) => {
-      // console.log({ lat, lng, dist ,data });
+      // console.log('put:',{ data });
       return data
     })
   }
 
-  removeFavorite(userId, placeId) {
-    alert('remove', userId, placeId)
+  removeFavorite = (placeId) => {
+    // alert('remove', userId, placeId)
     return this.places.delete(`/api/v1/me/favorite/${placeId}`)
     .then(({ data }) => {
-      auth.me(userId)
-      // console.log({ lat, lng, dist ,data });
+      // console.log('delete:',{ data });
       return data
     })
   }

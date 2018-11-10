@@ -1,6 +1,6 @@
-import React, { Component } from 'react';
-import { Link } from 'react-router-dom';
-import auth from '../lib/auth-service';
+import React, { Component } from 'react'
+import { Link } from 'react-router-dom'
+import auth from '../lib/auth-service'
 
 import './styles/access.css'
 class Signup extends Component {
@@ -9,13 +9,13 @@ class Signup extends Component {
     username: "",
     password: "",
     email: "",
-  };
+  }
 
   handleFormSubmit = (event) => {
-    event.preventDefault();
-    const username = this.state.username;
-    const password = this.state.password;
-    const email = this.state.email;
+    event.preventDefault()
+    const username = this.state.username
+    const password = this.state.password
+    const email = this.state.email
 
     auth.signup({ username, password, email })
       .then( (user) => {
@@ -23,19 +23,19 @@ class Signup extends Component {
             username: "",
             password: "",
             email:"",
-        });
+        })
         this.props.setUser(user)
       })
       .catch( error => console.log(error) )
   }
 
   handleChange = (event) => {
-    const {name, value} = event.target;
-    this.setState({[name]: value});
+    const {name, value} = event.target
+    this.setState({[name]: value})
   }
 
   render() {
-    const { username, password, email } = this.state;
+    const { username, password, email } = this.state
 
     return (
       <div className="container">
@@ -52,7 +52,7 @@ class Signup extends Component {
             <label>email:</label>
             <input className="mdl-textfield__input"  type="email" name="email" value={email} onChange={this.handleChange} />
 
-            <div class="mdl-card__supporting-text">
+            <div className="mdl-card__supporting-text">
               <p>Already have account?
                 <Link to={"/login"}> Login</Link>
               </p>
@@ -67,4 +67,4 @@ class Signup extends Component {
   }
 }
 
-export default Signup;
+export default Signup
