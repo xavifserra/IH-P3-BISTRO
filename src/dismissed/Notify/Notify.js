@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React from 'react';
 
 const styleMessage = {
   backgroundColor: "#ff7272",
@@ -6,11 +6,11 @@ const styleMessage = {
   padding: "1em",
 }
 
-const Messajes = (message) => {
+const Notify = (message) => {
   return (
     <div style={styleMessage}>
       {message}
     </div>
   );
 }
-export default Messajes
+export default Notify

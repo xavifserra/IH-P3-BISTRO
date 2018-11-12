@@ -342,11 +342,11 @@ Menu model
 
 ### Git
 
-#### [Client repository](https://github.com/xavifserra/IH-P3-BISTRO)
-#### [Server repository](https://github.com/xavifserra/IH-P3-API)
+#### [Client repository] https://github.com/xavifserra/IH-P3-BISTRO
+#### [Server repository] https://github.com/xavifserra/IH-P3-API
 
-#### [Deploy Front](https://dailybistro.herokuapp.com/)
-#### [Deploy API](https://api-dailybistro.herokuapp.com/)
+#### [Deploy Front] https://dailybistro.herokuapp.com/
+#### [Deploy API] https://bistro-219204.firebaseapp.com/login
 
 
 ### Slides

@@ -7,6 +7,7 @@ import { withStyles } from '@material-ui/core/styles'
 // import { Link } from 'react-router-dom'
 import { withAuth } from '../AuthProvider'
 import ModalForm from '../Modal/ModalForm'
+import NewPlace from '../../pages/NewPlace'
 
 // import 'mapbox-gl/dist/mapbox-gl.css'
 // import './map.css'
@@ -123,7 +124,7 @@ class Map extends PureComponent {
                 float:"right"
               }}
             >
-            <div><h1>test</h1></div>
+              <NewPlace/>
             </ModalForm>
           </MapReact>
       </Paper>

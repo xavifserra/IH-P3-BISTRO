@@ -2,7 +2,7 @@ import axios from 'axios';
 
 class Places {
   constructor() {
-    console.log(process.env.REACT_APP_BASE_URI);
+    // console.log(process.env.REACT_APP_BASE_URI);
     this.places = axios.create({
       // baseURL: process.env.NODE_ENV ==='development'
       //           ? process.env.REACT_APP_DEV_URI
@@ -23,7 +23,7 @@ class Places {
     // alert('put', userId, placeId)
     return this.places.put(`/api/v1/me/favorite/${placeId}`)
     .then(({ data }) => {
-      // console.log('put:',{ data });
+      console.log('put:----------->', data );
       return data
     })
   }

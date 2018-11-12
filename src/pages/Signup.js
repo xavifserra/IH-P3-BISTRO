@@ -9,6 +9,7 @@ class Signup extends Component {
     username: "",
     password: "",
     email: "",
+    error:"",
   }
 
   handleFormSubmit = (event) => {
@@ -18,15 +19,15 @@ class Signup extends Component {
     const email = this.state.email
 
     auth.signup({ username, password, email })
-      .then( (user) => {
+      .then( (response) => {
         this.setState({
             username: "",
             password: "",
             email:"",
         })
-        this.props.setUser(user)
+        !response.error?this.props.setUser(response):this.setState({error:response.error})
       })
-      .catch( error => console.log(error) )
+
   }
 
   handleChange = (event) => {
@@ -57,6 +58,7 @@ class Signup extends Component {
                 <Link to={"/login"}> Login</Link>
               </p>
             </div>
+            {this.state.error && <div className='error'>{this.state.error}</div>}
               <div className="mdl-card__actions mdl-card--border">
                   <button className="mdl-button mdl-js-button mdl-button--raised mdl-button--colored mdl-js-button ">SignUp</button>
               </div>

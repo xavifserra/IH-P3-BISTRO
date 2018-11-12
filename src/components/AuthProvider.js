@@ -1,9 +1,12 @@
 /* eslint-disable no-unexpected-multiline */
 import React, { Component } from 'react'
+import { Link, Redirect } from 'react-router-dom';
+
 import auth from '../lib/auth-service'
 import places from '../lib/places-service'
-// import CircularProgress  from '../components/Progress/CircularProgres'
+import mapServices from '../lib/map-services';
 import LinearProgress  from '../components/Progress/LinearProgress'
+
 
 export const AuthContext = React.createContext(
   // authStore // default value
@@ -22,15 +25,17 @@ export const withAuth = () => (Comp) => {
               user={authStore.user}
               logout={authStore.logout}
               setUser={authStore.setUser}
-              userProfile={authStore.userProfile}
-              userRefresh={authStore.userRefresh}
+              userSaveProfile={authStore.userSaveProfile}
+              userDeleteProfile={authStore.userDeleteProfile}
+              // userFavorites= {this.userFavorites}
               lat = { authStore.lat }
               lng = { authStore.lng }
               geojson = { authStore.geojson }
-              searchString = { authStore.searchString }
               locateMe = { authStore.locateMe}
               handleSearch = {authStore.handleSearch}
+              searchString = { authStore.searchString }
               userFavorite = {authStore.userFavorite}
+              saveNewPlace= {authStore.saveNewPlace}
               {...this.props} />
           }}
         </Consumer>
@@ -38,7 +43,6 @@ export const withAuth = () => (Comp) => {
     }
   }
 }
-
 export default class AuthProvider extends Component {
   state = {
     isLogged: false,
@@ -66,11 +70,6 @@ export default class AuthProvider extends Component {
         })
       })
       .catch( error => console.log(error))
-  }
-
-  userProfile = (e) => {
-    console.log(e)
-    // e.preventDefault()
   }
 
   locateMe = () =>{
@@ -108,35 +107,50 @@ export default class AuthProvider extends Component {
   }
 
   handleSearch = (e) =>{
-    // console.log(e.target.value)
 
     this.setState({
       searchString : e.target.value
     })
   }
 
-  getCoordinates = (e) => {
-    console.log(e.target.value)
+  saveNewPlace = (e) => {
+
+    console.log('save new place');
+    // mapServices.getAddresInCurrentCoordinates()
     // if(navigator.geolocation){
       //   return navigator.geolocation.getCurrentPosition(({coords}) => coords }
       // }
-    }
+  }
 
-  userFavorite = (object) => {
-    const { placeId, actualState} = object
+  userDeleteProfile = (e) => {
+    auth.delete()
+    .then(response=>this.logoutUser())
+  }
+
+  userSaveProfile = (newProfile) => {
+    // e.preventDefault() Not needed. controlled in FormiK
+    auth.update(newProfile)
+    .then(savedUser=> !savedUser.error ? this.setUser(savedUser) : null)
+  }
+
+  userFavorite = (favorite) => {
+    const { placeId, actualState} = favorite
 
     // console.log({ placeId, actualState, usr:this.state.user })
 
     if(!actualState) {
       places.putFavorite(placeId).then(({updatedUser})=> {
-        this.setState({user:updatedUser})
+        // console.log(updatedUser);
+        console.log('push',updatedUser);
+        this.setUser(updatedUser)
       })
-      // console.log(this.state.user);
+      // console.log(this.state.user.favorites);
     }else{
-      places.removeFavorite(placeId).then(({updatedUser})=> {
-        this.setState({user:updatedUser})
+      places.removeFavorite(placeId)
+      .then(({updatedUser})=> {
+        console.log('pull',updatedUser);
+        this.setUser(updatedUser)
       })
-      // console.log(this.state.user);
     }
   }
 
@@ -173,7 +187,6 @@ export default class AuthProvider extends Component {
         <center>
           Loading
           <LinearProgress/>
-          {/* <CircularProgress/> */}
         </center>
       </div>
     default:
@@ -182,15 +195,16 @@ export default class AuthProvider extends Component {
           isLogged, user,
           logout: this.logoutUser,
           setUser: this.setUser,
-          userProfile: this.userProfile,
-          userRefresh: this.userRefresh,
+          userSaveProfile: this.userSaveProfile,
+          userDeleteProfile: this.userDeleteProfile,
+          userFavorite : this.userFavorite,
           geojson,
           lat,
           lng,
           searchString,
           handleSearch: this.handleSearch,
           locateMe:this.locateMe,
-          userFavorite : this.userFavorite,
+          saveNewPlace:this.saveNewPlace,
         }}>
           {children}
         </Provider>

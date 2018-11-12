@@ -1,14 +1,27 @@
-import React from 'react'
-import { Link } from 'react-router-dom';
-import { Formik, Form, Field, Label } from 'formik'
+import React, { Component }  from 'react'
+import { Link, Redirect } from 'react-router-dom';
+import { Formik, Form, Field } from 'formik'
 import * as Yup from 'yup'
 
-
-// import './styles/profile.css'
 import { withAuth } from '../components/AuthProvider'
 
 const style={
+  container: {
+    height: '100%',
+    display: 'flex',
+    justifyContent: 'center',
+  },
+  containerButtons: {
+    height: '100%',
+    display: 'flex',
+    justifyContent: 'space-around',
+  },
+  form: {
+    margin: '10px',
+    width: '80%',
+  },
   input: {
+    margin: '5px',
     padding: '.5rem',
     fontSize: '16px',
     width: '100%',
@@ -22,12 +35,13 @@ const style={
     marginBottom: '.5rem',
   }
 }
+
 const SignupSchema = Yup.object().shape({
   name: Yup.string()
     .min(2, 'Too Short!')
     .max(50, 'Too Long!')
     .required('Required'),
-  lastName: Yup.string()
+  lastname: Yup.string()
     .min(2, 'Too Short!')
     .max(50, 'Too Long!')
     .required('Required'),
@@ -36,46 +50,80 @@ const SignupSchema = Yup.object().shape({
     .required('Required'),
 })
 
-const Profile = () => (
-  <div>
-    <h1>Profile</h1>
-    <Formik
-      initialValues={{
-        name: '',
-        lastName: '',
-        username: '',
-        password: '',
-        email: '',
-        favorites: '',
-        comments: '',
-        following: '',
-      }}
-      validationSchema={SignupSchema}
-      onSubmit={values => {
-        // same shape as initial values
-        console.log(values)
-      }}
-    >
-      {({ errors, touched }) => (
-        <Form>
-          <label>Name</label>
-          <Field name="name" style={style.input}/>
-          {errors.name && touched.name ? ( <div>{errors.name}</div> ) : null}
-          <Field name="lastName" style={style.input}/>
-          {errors.lastName && touched.lastName ? ( <div>{errors.lastName}</div> ) : null}
-          <Field name="email" type="email" style={style.input}/>
-          {errors.email && touched.email ? <div style={style.label}>{errors.email}</div> : null}
-          <Field name="languages" type="languages" style={style.input}/>
-          <Field name="favorites" type="favorites" style={style.input}/>
-          <Field name="comments" type="comments" style={style.input}/>
-          <Field name="following" type="following" style={style.input}/>
+class Profile extends Component {
 
-          <button className="mdl-button mdl-js-button mdl-button--raised mdl-button--colored" type="submit">Submit</button>
-          <Link className="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent" to="/private">Cancel</Link>
-        </Form>
-      )}
-    </Formik>
-  </div>
-)
+  // eslint-disable-next-line no-restricted-globals
+  confirmDelete = () => confirm("DELETE USER\n are you sure?") ? this.props.userDeleteProfile() : null
 
-export default Profile
+  render() {
+
+    const {
+      name,
+      lastname,
+      username,
+      password,
+      email,
+    } = this.props.user
+
+    return (
+      <div>
+        <center>
+          <h4>Profile user: <span>{username}</span> </h4>
+        </center>
+        <Formik
+          initialValues={{
+            name: name,
+            lastname: lastname,
+            username: username,
+            password: password,
+            email: email,
+          }}
+
+          validationSchema={SignupSchema}
+
+          onSubmit={(values) => {
+            // same shape as initial values
+            console.log('sended:',values)
+            this.props.userSaveProfile(values)
+            return <Redirect to={'/login'}/>
+          }}
+        >
+          {({ errors, touched }) => (
+            <div style={style.container}>
+              <Form style={style.form}>
+                <label>Name</label>
+                <Field name="name" style={style.input}/>
+                <label>Lastname</label>
+                <Field name="lastname" style={style.input}/>
+                <label>User Name</label>
+                <Field name="username" style={style.input}/>
+                <label>email</label>
+                <Field name="email" type="email" style={style.input}/>
+                { errors.email && touched.email ? <div style={style.label}>{errors.email}</div> : null }
+                <label>Password</label>
+                <Field name="password" type="password" style={style.input}/>
+
+                <br/>
+                <div style={style.containerButtons}>
+                  <button className="mdl-button mdl-js-button mdl-button--raised mdl-button--colored"
+                    type="submit">Submit</button>
+                  <Link
+                    className="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent"
+                    to="/private">Back
+                  </Link>
+                  <div
+                    className="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent mdl-button--icon"
+                    onClick={this.confirmDelete}>
+                    <i className="material-icons">delete</i>"
+                  </div>
+                </div>
+              </Form>
+            </div>
+          )}
+        </Formik>
+      </div>
+    )
+  }
+}
+
+export default withAuth()(Profile)

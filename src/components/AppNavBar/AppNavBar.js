@@ -125,7 +125,7 @@ class AppNavBar extends React.Component {
     const isMenuOpen = Boolean(anchorEl)
     const isMobileMenuOpen = Boolean(mobileMoreAnchorEl)
 
-    const { isLogged, user, logout, userProfile, userFavorites } = this.props
+    const { isLogged, user, logout } = this.props
     const { username, favorites } = user
     // console.log('userIsLogged:',isLogged);
     if (isLogged) {
@@ -137,17 +137,17 @@ class AppNavBar extends React.Component {
           open={isMobileMenuOpen}
           onClose={this.handleMobileMenuClose}
         >
-          <MenuItem onClick={userFavorites}>
+          <MenuItem onClick={this.handleMobileMenuClose}>
+            <Link  className={classes.linkMobileStyle} to='/favorites'>
             <IconButton color="inherit" >
-              <Link className={classes.linkMobileStyle} to='/favorites'>
               <Badge className={classes.margin} badgeContent={favorites.length} color="secondary">
                 <TurnedIn />
               </Badge>
-            </Link>
             </IconButton>
+            </Link>
             <p>Fav</p>
           </MenuItem>
-          <MenuItem onClick={userProfile} >
+          <MenuItem onClick={this.handleMobileMenuClose}>
             <Link className={classes.linkMobileStyle} to='/profile'>
               <IconButton color="inherit">
                 <AccountCircle />
@@ -184,7 +184,7 @@ class AppNavBar extends React.Component {
               <div className={classes.grow} />
                 <div className={classes.sectionDesktop}>
                   <Link className={classes.linkStyle} to='/favorites'>
-                    <IconButton onClick={userFavorites} color="inherit" >
+                    <IconButton color="inherit" >
                       <Badge className={classes.margin} badgeContent={favorites.length} color="secondary">
                         <TurnedIn />
                       </Badge>
@@ -194,7 +194,6 @@ class AppNavBar extends React.Component {
                     <IconButton
                       aria-owns={isMenuOpen ? 'material-appbar' : null}
                       aria-haspopup="true"
-                      onClick={userProfile}
                       color="inherit"
                       >
                       <AccountCircle />
@@ -217,20 +216,21 @@ class AppNavBar extends React.Component {
               </div>
             </Toolbar>
           </AppBar>
-          {/* {renderMenu} */}
           {renderMobileMenu}
         </div>
       )
     }else{
       return(
-        <div>
+        // <Login/>
+        // <div>
           <Redirect to='/login'></Redirect>
-          {/*
-          <Redirect to='/profile'/>
-            <Link to='/login'>Login</Link>
-            <Link to='/signup'>Signup</Link>
-          */}
-        </div>)
+        //   {/*
+        //   <Redirect to='/profile'/>
+        //     <Link to='/login'>Login</Link>
+        //     <Link to='/signup'>Signup</Link>
+        //   */}
+        // </div>
+      )
     }
   }
 }

@@ -22,13 +22,14 @@ const stylePaper = theme => ({
 
 class Private extends Component {
 
-  componentWillReceiveProps(){
+  componentDidMount(){
     if (this.props.geojson.length<0) this.props.locateMe()
   }
 
   render() {
     const { user, searchString, geojson, userFavorite } = this.props
     const { features } = geojson
+    console.log(user)
 
     return (
      <div>
@@ -38,7 +39,7 @@ class Private extends Component {
         // eslint-disable-next-line array-callback-return
         features.map((element) => {
           const {_id, services, place} = element.properties
-          if (place.includes(searchString.toLowerCase())){
+          if (place.includes(searchString)){ // .toLowerCase()
             // console.log(_id, user.favorites.some(e => {
             //   console.log(e,"<=>",_id);
             //   return e===_id}))
@@ -46,10 +47,9 @@ class Private extends Component {
             return(
             <ListPlaces
               key={_id}
-              data={element}
+              place={element.properties}
               user={user}
               userFavorite={userFavorite}
-              favoriteIsEnabled={user.favorites.some(e => e===_id)}
               services={services}
             />
             )}

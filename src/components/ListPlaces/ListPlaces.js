@@ -6,38 +6,50 @@ class ListPlaces extends Component {
 
   state={
     showDetails:false,
+    favoriteIsEnabled: {}
   }
-
   handleDetails= () => {
     const newState= !this.state.showDetails
     this.setState({
-      showDetails: (newState)
+      showDetails: newState
     })
   }
+
   changeStateOfFavorite = () => {
     this.props.userFavorite(
       {
         placeId:this.props.data.properties._id,
-        actualState:this.props.favoriteIsEnabled,
+        actualState:this.state.favoriteIsEnabled,
       })
+      // .then(result=> console.log('result:  >',result))
     }
 
-  render() {
-    const {
-      _id:placeId,
-      place,
-      distance,
-      address,
-      category,
-      location ,
-      numReviews,
-      reviews,
-      details,
-      polarity,
-      lat,
-      lng,
-      owner,
-    } = this.props.data.properties
+    componentDidUpdate = () => {
+      console.log('Receive props', this.props.user.favorites.length);
+      console.log(this.props);
+      this.setState={
+        // showDetails:false,
+        favoriteIsEnabled: this.props.user.favorites.some(e => e===this.props.data.properties._id)
+      }
+    }
+
+    render = () => {
+      const {
+        _id:placeId,
+        place,
+        distance,
+        address,
+        category,
+        location ,
+        numReviews,
+        reviews,
+        details,
+        polarity,
+        lat,
+        lng,
+        owner,
+      } = this.props.place
+      console.log(this.props);
 
     const {
       airConditioned,
@@ -48,11 +60,14 @@ class ListPlaces extends Component {
       movileCoverage,
       pets,
       adapted,
-    } = this.props.services;
-    console.log(this.props);
+    } = this.props.services
+    // console.log(this.props);
     return (
     <div>
-      {/* {placeId} */}
+      {
+        console.log( 'render:',placeId,'<=>',this.state.favoriteIsEnabled)
+        /* {placeId} */
+      }
       <div className='mdl-layout main-description'>
         <div className="distance">
           <p>{distance} km</p>
@@ -77,8 +92,12 @@ class ListPlaces extends Component {
             {owner===this.props.user._id?"edit":null}
           </div>
           <div className="material-icons"
+            onClick={this.props.editPlace}>
+            {owner===this.props.user._id?"delete_forever":null}
+          </div>
+          <div className="material-icons"
              onClick={this.changeStateOfFavorite}>
-             {this.props.favoriteIsEnabled ? 'favorite':'favorite_border'}
+             {this.state.favoriteIsEnabled ? 'favorite':'favorite_border'}
           </div>
           <div className="material-icons"
             onClick={this.handleDetails}>
@@ -87,7 +106,8 @@ class ListPlaces extends Component {
         </div>
         <br/>
 
-        {this.state.showDetails &&
+        {
+          this.state.showDetails &&
           <div className='mdl-layout main-description'>
               <p>{this.props.user._id} </p>
             <p>{address}</p>

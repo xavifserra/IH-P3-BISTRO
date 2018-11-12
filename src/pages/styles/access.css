@@ -29,3 +29,9 @@
 .mdl-textfield__input{
   background-color: whitesmoke !important;
 }
+
+.error {
+  background-color: #ff7272;
+  color: white;
+  padding: 1em;
+}

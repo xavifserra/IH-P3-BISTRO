@@ -4,21 +4,23 @@ import auth from '../lib/auth-service'
 import { Link } from 'react-router-dom'
 
 import './styles/access.css'
+
 class Login extends Component {
   state = {
     username: "",
     password: "",
+    error:"",
   }
 
   handleFormSubmit = (event) => {
     event.preventDefault()
     const { username, password } = this.state
 
-    auth.login({ username, password })
-    .then( (user) => {
-      this.props.setUser(user)
+    return auth.login({ username, password })
+    .then( (response) => {
+      !response.error?this.props.setUser(response):this.setState({error:response.error})
     })
-    .catch( error => console.log(error) )
+
   }
 
   handleChange = (event) => {
@@ -47,6 +49,8 @@ class Login extends Component {
           New user? Sign up to create your account
             <Link to={"/signup"}> SignUp</Link>
         </div>
+
+        {this.state.error && <div className='error'>{this.state.error}</div>}
         <div className="mdl-card__actions mdl-card--border">
           <button className="mdl-button mdl-js-button mdl-button--raised mdl-button--colored mdl-js-button ">LogIn</button>
         </div>
