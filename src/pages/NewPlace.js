@@ -5,6 +5,7 @@ import * as Yup from 'yup'
 
 import { withAuth } from '../components/AuthProvider'
 import mapServices from '../lib/map-services';
+import { Redirect } from 'react-router-dom';
 
 const style={
     container: {
@@ -65,6 +66,16 @@ class NewPlace extends Component {
     address: '',
     lat: 0.0,
     long: 0.0,
+    services:{
+      airConditioned: false,
+      fidelityCard: false,
+      ticketRestaurant: false,
+      chequeGourmet: false,
+      wifi: false,
+      movileCoverage: false,
+      pets: false,
+      adapted: false,
+    }
   }
 
   autoFillForm = () => {
@@ -88,6 +99,12 @@ class NewPlace extends Component {
     }
   }
 
+  submitForm = (e) => {
+    // e.preventDefault()
+    this.props.saveNewPlace(this.state)
+    return <Redirect to="/private"/>
+  }
+
   handlerFields = (e) =>{
     this.setState({
       [e.target.name] : e.target.value
@@ -98,27 +115,7 @@ class NewPlace extends Component {
 
     return (
       <div>
-        <Formik
-          initialValues={{
-            name: '',
-            address: '',
-            lat: 0.0,
-            long: 0.0,
-            airConditioned:false,
-            fidelityCard: false,
-            ticketRestaurant: false,
-            chequeGourmet: false,
-            wifi: false,
-            movileCoverage:false,
-            pets: false,
-            adapted: false,
-          }}
-          validationSchema={SignupSchema}
-          onSubmit={values => {
-            // same shape as initial values
-            console.log(values)
-          }}
-        >
+        <Formik>
           {
             ({ errors, touched }) => (
               <Form >
@@ -192,7 +189,9 @@ class NewPlace extends Component {
                 <br/>
 
                 <center>
-                  <button className="mdl-button mdl-js-button mdl-button--raised mdl-button--colored" type="submit">Submit</button>
+                  <button className="mdl-button mdl-js-button mdl-button--raised mdl-button--colored"
+                          type="submit"
+                          onClick={this.submitForm}>Submit</button>
                 </center>
               </Form>
             )

@@ -3,22 +3,27 @@ import React, { Component } from 'react'
 
 import './ListPlaces.css'
 class ListPlaces extends Component {
+  constructor(props) {
+    super(props);
 
-  state={
-    showDetails:false,
-    favoriteIsEnabled: {}
+    this.state={
+      showDetails: false,
+      favoriteIsEnabled: this.props.user.favorites.some(e => e===this.props.place._id),
+    }
   }
-  handleDetails= () => {
+
+  handleShowDetails= () => {
     const newState= !this.state.showDetails
-    this.setState({
-      showDetails: newState
-    })
+    console.log(newState);
+    this.setState = {
+      showDetails: newState,
+    }
   }
 
   changeStateOfFavorite = () => {
     this.props.userFavorite(
       {
-        placeId:this.props.data.properties._id,
+        placeId:this.props.place._id,
         actualState:this.state.favoriteIsEnabled,
       })
       // .then(result=> console.log('result:  >',result))
@@ -26,10 +31,11 @@ class ListPlaces extends Component {
 
     componentDidUpdate = () => {
       console.log('Receive props', this.props.user.favorites.length);
-      console.log(this.props);
+      console.log(this.props.user)
+      console.log(this.props.place)
       this.setState={
         // showDetails:false,
-        favoriteIsEnabled: this.props.user.favorites.some(e => e===this.props.data.properties._id)
+        favoriteIsEnabled: this.props.user.favorites.some(e => e===this.state.placeId)
       }
     }
 
@@ -49,7 +55,7 @@ class ListPlaces extends Component {
         lng,
         owner,
       } = this.props.place
-      console.log(this.props);
+      // console.log(this.props);
 
     const {
       airConditioned,
@@ -92,7 +98,7 @@ class ListPlaces extends Component {
             {owner===this.props.user._id?"edit":null}
           </div>
           <div className="material-icons"
-            onClick={this.props.editPlace}>
+            onClick={this.props.deletePlace}>
             {owner===this.props.user._id?"delete_forever":null}
           </div>
           <div className="material-icons"
@@ -100,7 +106,7 @@ class ListPlaces extends Component {
              {this.state.favoriteIsEnabled ? 'favorite':'favorite_border'}
           </div>
           <div className="material-icons"
-            onClick={this.handleDetails}>
+            onClick={this.handleShowDetails}>
             {this.state.showDetails?"expand_less":"expand_more"}
           </div>
         </div>
@@ -110,20 +116,20 @@ class ListPlaces extends Component {
           this.state.showDetails &&
           <div className='mdl-layout main-description'>
               <p>{this.props.user._id} </p>
-            <p>{address}</p>
-            <p>{reviews}</p>
-            <div className='material-icons' />
+              <p>{address}</p>
+              <p>{reviews}</p>
+              <div className='material-icons' />
 
-            <div className='mdl-layout main-description'>
-              <label >{category}</label>
-              <label >{location }</label>
-              <label>{numReviews}</label>
-              <label >{reviews}</label>
-              <label >{details}</label>
-              <label >{polarity}</label>
-              <label >{lat}</label>
-              <label >{lng}</label>
-            </div>
+              <div className='mdl-layout'>
+                <label >{category}</label>
+                <label >{location }</label>
+                <label>{numReviews}</label>
+                <label >{reviews}</label>
+                <label >{details}</label>
+                <label >{polarity}</label>
+                <label >{lat}</label>
+                <label >{lng}</label>
+              </div>
           </div>
         }
       </div>

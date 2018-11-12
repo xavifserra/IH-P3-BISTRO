@@ -1,10 +1,9 @@
 /* eslint-disable no-unexpected-multiline */
 import React, { Component } from 'react'
-import { Link, Redirect } from 'react-router-dom';
+// import { Link, Redirect } from 'react-router-dom';
 
 import auth from '../lib/auth-service'
 import places from '../lib/places-service'
-import mapServices from '../lib/map-services';
 import LinearProgress  from '../components/Progress/LinearProgress'
 
 
@@ -35,6 +34,8 @@ export const withAuth = () => (Comp) => {
               handleSearch = {authStore.handleSearch}
               searchString = { authStore.searchString }
               userFavorite = {authStore.userFavorite}
+              editPlace = {authStore.editPlace}
+              deletePlace = {authStore.deletePlace}
               saveNewPlace= {authStore.saveNewPlace}
               {...this.props} />
           }}
@@ -114,7 +115,8 @@ export default class AuthProvider extends Component {
   }
 
   saveNewPlace = (e) => {
-
+    // e.preventDefault() // not needed. Use Formik for send results
+    console.log(e)
     console.log('save new place');
     // mapServices.getAddresInCurrentCoordinates()
     // if(navigator.geolocation){
@@ -154,6 +156,13 @@ export default class AuthProvider extends Component {
     }
   }
 
+  editPlace = () => {
+
+  }
+
+  deletePlace = () => {
+
+  }
   componentDidMount() {
     auth.me()
       .then((user) => {
@@ -204,6 +213,8 @@ export default class AuthProvider extends Component {
           searchString,
           handleSearch: this.handleSearch,
           locateMe:this.locateMe,
+          editPlace:this.editPlace,
+          deletePlace:this.deletePlace,
           saveNewPlace:this.saveNewPlace,
         }}>
           {children}
