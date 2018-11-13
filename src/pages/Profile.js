@@ -19,6 +19,7 @@ const style={
   form: {
     margin: '10px',
     width: '80%',
+    height: '50%',
   },
   input: {
     margin: '5px',
@@ -85,7 +86,7 @@ class Profile extends Component {
             // same shape as initial values
             console.log('sended:',values)
             this.props.userSaveProfile(values)
-            return <Redirect to={'/login'}/>
+            return <Redirect to={'/private'}/>
           }}
         >
           {({ errors, touched }) => (

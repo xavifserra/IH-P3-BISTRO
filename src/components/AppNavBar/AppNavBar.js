@@ -140,7 +140,7 @@ class AppNavBar extends React.Component {
           <MenuItem onClick={this.handleMobileMenuClose}>
             <Link  className={classes.linkMobileStyle} to='/favorites'>
             <IconButton color="inherit" >
-              <Badge className={classes.margin} badgeContent={favorites.length} color="secondary">
+              <Badge className={classes.margin} badgeContent={favorites?favorites.length:0} color="secondary">
                 <TurnedIn />
               </Badge>
             </IconButton>
@@ -185,7 +185,7 @@ class AppNavBar extends React.Component {
                 <div className={classes.sectionDesktop}>
                   <Link className={classes.linkStyle} to='/favorites'>
                     <IconButton color="inherit" >
-                      <Badge className={classes.margin} badgeContent={favorites.length} color="secondary">
+                      <Badge className={classes.margin} badgeContent={favorites?favorites.length:0} color="secondary">
                         <TurnedIn />
                       </Badge>
                     </IconButton>

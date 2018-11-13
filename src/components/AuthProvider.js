@@ -55,6 +55,28 @@ export default class AuthProvider extends Component {
     status: 'loading'
   }
 
+  // getSnapshotBeforeUpdate(prevProps, prevState){
+  //   console.log('Snapshot',this.state.user===prevState.user&&prevState.user>0);
+  //   if(this.state.user===prevState.user&&prevState.user>0){
+  //     console.log('Need Snapshot');
+  //     return prevState.user
+  //   }
+  //   return null
+  // }
+
+  // componentDidUpdate(prevProps, prevState,snapshot){
+  //   console.log('actual state:',this.state.user)
+  //   console.log('prev state:',prevState.user)
+  //   if (snapshot !== null) console.log('snapshot');
+  //   if(this.state.user===prevState.user&&prevState.user>0){
+  //     console.log('sin cambios');
+  //   }
+  // }
+
+  componentWillMount(){
+    this.locateMe()
+  }
+
   setUser = (user) => {
     this.setState({
       isLogged: true,
@@ -131,6 +153,7 @@ export default class AuthProvider extends Component {
 
   userSaveProfile = (newProfile) => {
     // e.preventDefault() Not needed. controlled in FormiK
+
     auth.update(newProfile)
     .then(savedUser=> !savedUser.error ? this.setUser(savedUser) : null)
   }
@@ -138,20 +161,20 @@ export default class AuthProvider extends Component {
   userFavorite = (favorite) => {
     const { placeId, actualState} = favorite
 
-    // console.log({ placeId, actualState, usr:this.state.user })
-
     if(!actualState) {
-      places.putFavorite(placeId).then(({updatedUser})=> {
+      return places.putFavorite(placeId)
+      .then((updatedUser)=> {
         // console.log(updatedUser);
         console.log('push',updatedUser);
         this.setUser(updatedUser)
+        return updatedUser
       })
-      // console.log(this.state.user.favorites);
     }else{
-      places.removeFavorite(placeId)
-      .then(({updatedUser})=> {
+      return places.removeFavorite(placeId)
+      .then((updatedUser)=> {
         console.log('pull',updatedUser);
         this.setUser(updatedUser)
+        return updatedUser
       })
     }
   }
@@ -163,6 +186,7 @@ export default class AuthProvider extends Component {
   deletePlace = () => {
 
   }
+
   componentDidMount() {
     auth.me()
       .then((user) => {
@@ -182,9 +206,6 @@ export default class AuthProvider extends Component {
       })
   }
 
-  componentWillMount(){
-    this.locateMe()
-  }
 
   render() {
     const { isLogged, user, status } = this.state

@@ -22,7 +22,7 @@ class Places {
   putFavorite = (placeId) => {
     // alert('put', userId, placeId)
     return this.places.put(`/api/v1/me/favorite/${placeId}`)
-    .then(({ data }) => {
+    .then(( {data} ) => {
       console.log('put:----------->', data );
       return data
     })
@@ -32,7 +32,7 @@ class Places {
     // alert('remove', userId, placeId)
     return this.places.delete(`/api/v1/me/favorite/${placeId}`)
     .then(({ data }) => {
-      // console.log('delete:',{ data });
+      console.log('delete:',{ data });
       return data
     })
   }

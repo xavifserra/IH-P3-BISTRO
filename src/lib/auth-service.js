@@ -14,14 +14,19 @@ class Auth {
   signup(user) {
     const { username, password, email } = user
     return this.auth.post('/auth/signup', {username, password, email})
-      .then(({ data }) => data)
+      .then(({ data }) => {
+        console.log(data)
+        return data
+      })
       .catch(({ response }) => response.data)
   }
 
   login(user) {
     const { username, password } = user
     return this.auth.post('/auth/login', {username, password})
-     .then(( {data} ) => data)
+     .then(( {data} ) => {
+       console.log(data);
+       return data})
      .catch(({ response }) => response.data)
   }
 

@@ -116,7 +116,6 @@ class Map extends PureComponent {
             <ModalForm
               title= 'new place'
               classButtonShow="mdl-button mdl-js-button mdl-button--fab mdl-js-ripple-effect mdl-button--colored"
-              classButtonHide="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent"
               textButtonShow="add"
               styleButtonShow = {{
                 margin:"5px",
