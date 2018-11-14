@@ -78,15 +78,53 @@ class NewPlace extends Component {
     }
   }
 
+  componentDidMount=()=>{
+    // console.log(this.props.actualPlace);
+    if(this.props.actualPlace){
+    const {
+      name,
+      address,
+      lat,
+      long,
+      services
+    } = this.props.actualPlace
+     const {
+       airConditioned,
+        fidelityCard,
+        ticketRestaurant,
+        chequeGourmet,
+        wifi,
+        movileCoverage,
+        pets,
+        adapted,
+      } = services
+      if (name && address && lat && long){
+        this.setState({
+          name: name,
+          address: address,
+          lat: lat,
+          long: long,
+          services:{
+            airConditioned:airConditioned,
+            fidelityCard:fidelityCard,
+            ticketRestaurant:ticketRestaurant,
+            chequeGourmet:chequeGourmet,
+            wifi:wifi,
+            movileCoverage:movileCoverage,
+            pets:pets,
+            adapted:adapted,
+          }
+        })
+      }}
+  }
+
   autoFillForm = () => {
 
     if(navigator.geolocation){
       navigator.geolocation.getCurrentPosition(({coords}) =>{
        const { latitude, longitude } = coords
-      console.log({ latitude, longitude });
         mapServices.getAddresInCurrentCoordinates(longitude, latitude)
         .then(data => {
-          console.log({data:data[0].place_name})
           this.setState({
             address: data[0].place_name,
             lat: latitude,
@@ -149,7 +187,7 @@ class NewPlace extends Component {
                     <Field className="material-icons" name="airConditioned" type="checkbox"/>
                     <label>Air Conditioned</label>
                   </div>
-                  <div  style={style.services}>
+                  <div style={style.services}>
                     <div className="material-icons">card_giftcard</div>
                     <Field className="material-icons" name="fidelityCard" type="checkbox"/>
                     <label>Fidelity Card</label>

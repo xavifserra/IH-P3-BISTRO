@@ -84,7 +84,7 @@ class Profile extends Component {
 
           onSubmit={(values) => {
             // same shape as initial values
-            console.log('sended:',values)
+            // console.log('sended:',values)
             this.props.userSaveProfile(values)
             return <Redirect to={'/private'}/>
           }}

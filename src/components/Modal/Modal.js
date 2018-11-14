@@ -1,5 +1,5 @@
 import React from 'react';
-import './modal.css'
+import './modal.css'// TODO incorporate Style to code
 
 const Modal = ({ handleClose, show, children, title }) => {
   const showHideClassName = show ? "modal display-block" : "modal display-none";

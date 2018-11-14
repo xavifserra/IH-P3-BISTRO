@@ -19,9 +19,9 @@ class ModalForm extends Component {
     const {title, children, classButtonShow, styleButtonShow, textButtonShow} = this.props
     return (
       <div>
-        <button className={classButtonShow} style={styleButtonShow} onClick={this.showModal}>
+        <div className={classButtonShow} style={styleButtonShow} onClick={this.showModal}>
               <i className="material-icons">{textButtonShow}</i>
-        </button>
+        </div>
         <Modal
           title={title}
           show={this.state.show}

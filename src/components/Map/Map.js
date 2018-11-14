@@ -46,11 +46,11 @@ class Map extends PureComponent {
   }
 
   onMapClick(map, e) {
-    console.log(e)
-    console.log(e.point)
-    console.log(e.lngLat)
+    // console.log(e)
+    // console.log(e.point)
+    // console.log(e.lngLat)
     const features = map.queryRenderedFeatures(e.point)
-    console.log(features)
+    // console.log(features)
     const xCoordinate = e.lngLat.lng
     const yCoordinate = e.lngLat.lat
     const data = {
@@ -115,7 +115,7 @@ class Map extends PureComponent {
               }}/>
             <ModalForm
               title= 'new place'
-              classButtonShow="mdl-button mdl-js-button mdl-button--fab mdl-js-ripple-effect mdl-button--colored"
+              classButtonShow="material-icons mdl-button mdl-js-button mdl-button--fab mdl-js-ripple-effect mdl-button--colored"
               textButtonShow="add"
               styleButtonShow = {{
                 margin:"5px",

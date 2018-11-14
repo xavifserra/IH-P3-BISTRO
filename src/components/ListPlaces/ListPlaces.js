@@ -1,7 +1,9 @@
 
 import React, { Component } from 'react'
+import ModalForm from '../Modal/ModalForm';
+import NewPlace  from '../../pages/NewPlace';
 
-import './ListPlaces.css'
+import './ListPlaces.css'// TODO incorporate Style to code
 class ListPlaces extends Component {
     state={
       showDetails: false,
@@ -59,7 +61,7 @@ class ListPlaces extends Component {
         lng,
         owner,
       } = this.props.place
-       console.log(this.props.place);
+      //  console.log(this.props.place);
 
     const {
       airConditioned,
@@ -88,7 +90,7 @@ class ListPlaces extends Component {
           <h5 >{name}</h5>
         </div>
 
-        <div className="social">
+        <div className="services">
           <div className="material-icons">{airConditioned?"ac_unit":null}</div>
           <div className="material-icons">{fidelityCard?"card_giftcard":null}</div>
           <div className="material-icons">{ticketRestaurant?"credit_card":null}</div>
@@ -100,10 +102,17 @@ class ListPlaces extends Component {
         </div>
 
         <div className="manage">
-          <div className="material-icons"
+          {/* <div className="material-icons"
             onClick={this.props.editPlace}>
             {owner===this.props.user._id?"edit":null}
-          </div>
+          </div> */}
+          <ModalForm
+              title = 'edit place'
+              classButtonShow="material-icons"
+              textButtonShow= {owner===this.props.user._id?"edit":null}
+            >
+              <NewPlace actualPlace={this.props.place}/>
+          </ModalForm>
           <div className="material-icons"
             onClick={this.props.deletePlace}>
             {owner===this.props.user._id?"delete_forever":null}
@@ -112,6 +121,7 @@ class ListPlaces extends Component {
              onClick={this.handleStateOfFavorite}>
              {this.state.favoriteIsEnabled ? 'favorite':'favorite_border'}
           </div>
+
           <div className="material-icons"
             onClick={this.handleShowDetails}>
             {this.state.showDetails?"expand_less":"expand_more"}
@@ -149,4 +159,3 @@ class ListPlaces extends Component {
 }
 
 export default ListPlaces
-

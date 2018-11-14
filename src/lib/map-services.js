@@ -33,12 +33,12 @@ class MapServices {
         .send()
         .then((response) => {
           const {features} = response.body
-          console.log({features});
+          // console.log({features});
           return features;
         })
       }
     }
-    
+
 const mapServices = new MapServices()
 export default mapServices
 

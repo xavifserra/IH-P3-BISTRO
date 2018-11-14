@@ -76,7 +76,7 @@ export default class PlacesProvider extends Component {
   }
 
   handleSearch = (e) =>{
-    console.log(e.target.value);
+    // console.log(e.target.value);
 
     this.setState({
       searchString : e.target.value
@@ -84,14 +84,14 @@ export default class PlacesProvider extends Component {
   }
 
   getCoordinates = (e) => {
-    console.log(e.target.value)
+    // console.log(e.target.value)
     // if(navigator.geolocation){
     //   return navigator.geolocation.getCurrentPosition(({coords}) => coords }
     // }
   }
 
   userFavorite = (e) => {
-    console.log(e)
+    // console.log(e)
     const {userId, placeId, favoriteEnbled} = e
     !favoriteEnbled ?  places.putFavorite(userId, placeId): places.removeFavorite(userId, placeId)
     this.props.refreshUser()

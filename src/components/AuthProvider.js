@@ -138,8 +138,8 @@ export default class AuthProvider extends Component {
 
   saveNewPlace = (e) => {
     // e.preventDefault() // not needed. Use Formik for send results
-    console.log(e)
-    console.log('save new place');
+    // console.log(e)
+    // console.log('save new place');
     // mapServices.getAddresInCurrentCoordinates()
     // if(navigator.geolocation){
       //   return navigator.geolocation.getCurrentPosition(({coords}) => coords }
@@ -165,14 +165,14 @@ export default class AuthProvider extends Component {
       return places.putFavorite(placeId)
       .then((updatedUser)=> {
         // console.log(updatedUser);
-        console.log('push',updatedUser);
+        // console.log('push',updatedUser);
         this.setUser(updatedUser)
         return updatedUser
       })
     }else{
       return places.removeFavorite(placeId)
       .then((updatedUser)=> {
-        console.log('pull',updatedUser);
+        // console.log('pull',updatedUser);
         this.setUser(updatedUser)
         return updatedUser
       })
@@ -183,8 +183,10 @@ export default class AuthProvider extends Component {
 
   }
 
-  deletePlace = () => {
-
+  deletePlace = (e) => {
+    // console.log(e);
+    places.removePlace()
+    .then(placeRemoved=>console.log(placeRemoved))
   }
 
   componentDidMount() {

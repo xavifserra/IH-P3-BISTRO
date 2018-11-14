@@ -44,17 +44,17 @@ class Map extends PureComponent {
   }
 
   onMapClick (map, evt) {
-    console.log(evt.lngLat);
+    // console.log(evt.lngLat);
   }
 
   handleOnClickMap (e) {
-    console.log(e.Layer);
+    // console.log(e.Layer);
   }
 
   handleOnClickElement(e){
-    console.log(e);
+    // console.log(e);
     const { lat, lng } = e.lngLat
-    console.log(lat,lng);
+    // console.log(lat,lng);
    return (
     <Popup
       coordinates={[lng,lat]}

@@ -15,7 +15,7 @@ class Auth {
     const { username, password, email } = user
     return this.auth.post('/auth/signup', {username, password, email})
       .then(({ data }) => {
-        console.log(data)
+        // console.log(data)
         return data
       })
       .catch(({ response }) => response.data)
@@ -25,7 +25,7 @@ class Auth {
     const { username, password } = user
     return this.auth.post('/auth/login', {username, password})
      .then(( {data} ) => {
-       console.log(data);
+      //  console.log(data);
        return data})
      .catch(({ response }) => response.data)
   }
@@ -43,7 +43,7 @@ class Auth {
   }
 
   update(newProfile) {
-    console.log(newProfile);
+    // console.log(newProfile);
     return this.auth.put('/api/v1/me/',newProfile)
       .then(({ data }) => data)
       .catch(({ response }) => response.data)

@@ -23,7 +23,7 @@ class Places {
     // alert('put', userId, placeId)
     return this.places.put(`/api/v1/me/favorite/${placeId}`)
     .then(( {data} ) => {
-      console.log('put:----------->', data );
+      // console.log('put fav:', data );
       return data
     })
   }
@@ -32,11 +32,18 @@ class Places {
     // alert('remove', userId, placeId)
     return this.places.delete(`/api/v1/me/favorite/${placeId}`)
     .then(({ data }) => {
-      console.log('delete:',{ data });
+      // console.log('delete fav:',{ data });
       return data
     })
   }
 
+  removePlace = (placeId) => {
+    return this.places.delete(`/api/v1/places/${placeId}`)
+    .then(({ data }) => {
+      // console.log('delete place:',{ data });
+      return data
+    })
+  }
 }
 
 const places = new Places()
