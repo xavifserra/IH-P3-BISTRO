@@ -57,7 +57,7 @@ class Places {
   updatePlace = (placeId, place) =>{
 
     console.log(place);
-    return this.places.put(`/api/v1/places/${placeId}`,place)
+    return this.places.put(`/api/v1/places/${placeId}`, place)
       .then(({ data }) => {
          console.log('update place:',{ data });
         return data
