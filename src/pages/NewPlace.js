@@ -44,7 +44,8 @@ const style={
       flexDirection:'column',
       justifyContent: 'center',
       alignItems: 'center',
-      maxWidht: '5rem',
+      // maxWidht: '5rem',
+      minWidth: '12%',
     }
 }
 const SignupSchema = Yup.object().shape({
@@ -56,8 +57,8 @@ const SignupSchema = Yup.object().shape({
     .min(2, 'Too Short!')
     .max(50, 'Too Long!')
     .required('Required'),
-  number: Yup.number()
-    .required('Required'),
+  // number: Yup.number()
+  //   .required('Required'),
 })
 
 class NewPlace extends Component {
@@ -65,7 +66,7 @@ class NewPlace extends Component {
     name: '',
     address: '',
     lat: 0.0,
-    long: 0.0,
+    lng: 0.0,
     services:{
       airConditioned: false,
       fidelityCard: false,
@@ -75,47 +76,54 @@ class NewPlace extends Component {
       movileCoverage: false,
       pets: false,
       adapted: false,
-    }
+    },
   }
 
   componentDidMount=()=>{
     // console.log(this.props.actualPlace);
-    if(this.props.actualPlace){
-    const {
-      name,
-      address,
-      lat,
-      long,
-      services
-    } = this.props.actualPlace
-     const {
-       airConditioned,
-        fidelityCard,
-        ticketRestaurant,
-        chequeGourmet,
-        wifi,
-        movileCoverage,
-        pets,
-        adapted,
-      } = services
-      if (name && address && lat && long){
-        this.setState({
-          name: name,
-          address: address,
-          lat: lat,
-          long: long,
-          services:{
-            airConditioned:airConditioned,
-            fidelityCard:fidelityCard,
-            ticketRestaurant:ticketRestaurant,
-            chequeGourmet:chequeGourmet,
-            wifi:wifi,
-            movileCoverage:movileCoverage,
-            pets:pets,
-            adapted:adapted,
+    if (this.props.editPlace){
+      if(this.props.actualPlace){
+        const {
+          name,
+          address,
+          lat,
+          lng,
+          services
+        } = this.props.actualPlace
+        console.log(name, address, lat, lng);
+          this.setState({editPlace:true})
+          // console.log('Props',this.props.actualPlace)
+         if (services) {const {
+            airConditioned,
+            fidelityCard,
+            ticketRestaurant,
+            chequeGourmet,
+            wifi,
+            movileCoverage,
+            pets,
+            adapted,
+            } = services
+
+            this.setState({services:{
+              airConditioned:airConditioned,
+              fidelityCard:fidelityCard,
+              ticketRestaurant:ticketRestaurant,
+              chequeGourmet:chequeGourmet,
+              wifi:wifi,
+              movileCoverage:movileCoverage,
+              pets:pets,
+              adapted:adapted,
+              }
+            })
           }
-        })
-      }}
+          this.setState({
+            name: name,
+            address: address,
+            lat: lat,
+            lng: lng,
+          })
+      }
+    }
   }
 
   autoFillForm = () => {
@@ -128,38 +136,46 @@ class NewPlace extends Component {
           this.setState({
             address: data[0].place_name,
             lat: latitude,
-            long: longitude,
+            lng: longitude,
           })
 
-          this.props.saveNewPlace()
+          // this.props.saveNewPlace()
         })
       })
     }
   }
 
-  submitForm = (e) => {
+  submitForm = (values, actions) => {
     // e.preventDefault()
-    this.props.saveNewPlace(this.state)
-    return <Redirect to="/private"/>
+    // console.log(values, actions)
+    // console.log(this.state);
+    !this.props.editionMode
+    ?this.props.saveNewPlace(this.state)
+    :this.props.editPlace(this.props.id,this.state)
   }
 
-  handlerFields = (e) =>{
+  handlerFields = (e) => {
     this.setState({
       [e.target.name] : e.target.value
     })
-
   }
-  render = () => {
 
+  render = () => {
+    // console.log('state:', this.state);
     return (
-      <div>
-        <Formik>
+
+        <Formik
+          onSubmit={this.submitForm}
+        >
           {
             ({ errors, touched }) => (
               <Form >
                 <div style={style.container}>
                   <label style={style.label}> Name</label>
-                  <Field value={this.state.name} name="name" style={style.input} onChange={this.handlerFields}/>
+                  <Field value={this.state.name}
+                        name="name" style={style.input}
+                        onChange={this.handlerFields}
+                        />
                   <div className="material-icons"
                     onClick={this.autoFillForm}>
                     my_location
@@ -167,60 +183,61 @@ class NewPlace extends Component {
                 </div>
                 <div style={style.container}>
                   <label style={style.label}>address</label>
-                  <Field value={this.state.address} name="address" type="text" style={style.input} onChange={this.handlerFields}/>
+                  <Field value={this.state.address}
+                    name="address" type="text" style={style.input}
+                    onChange={this.handlerFields}/>
                 </div>
                 <div style={style.container}>
-                  <label style={style.label}>coordinates long</label>
-                  <Field value={this.state.long} name="long" type="number"style={style.input} onChange={this.handlerFields}/>
+                  <p style={style.label}>coordinates long</p>
+                  <Field value={this.state.lng} name="lng" type="text"style={style.input} onChange={this.handlerFields}/>
                   {errors.lastName && touched.lastName ? ( <div>{errors.lastName}</div> ) : null}
                   <label style={style.label}> coordinates lat</label>
-                  <Field value={this.state.lat} name="lat" type="number" style={style.input} onChange={this.handlerFields}/>
+                  <Field value={this.state.lat} name="lat" type="text" style={style.input} onChange={this.handlerFields}/>
                   {errors.email && touched.email ? <div style={style.label}>{errors.email}</div> : null}
                 </div>
               {/* SERVICES */}
                 <h5> services</h5>
                 <hr />
-
                 <div style={style.container}>
                   <div style={style.services}>
                     <div className="material-icons">ac_unit</div>
-                    <Field className="material-icons" name="airConditioned" type="checkbox"/>
-                    <label>Air Conditioned</label>
+                    <Field value={this.state.services.airConditioned} className="material-icons" name="airConditioned" type="checkbox"/>
+                    {/* <centerd>Air Conditioned</centerd> */}
                   </div>
                   <div style={style.services}>
                     <div className="material-icons">card_giftcard</div>
-                    <Field className="material-icons" name="fidelityCard" type="checkbox"/>
-                    <label>Fidelity Card</label>
+                    <Field value={this.state.services.fidelityCard} className="material-icons" name="fidelityCard" type="checkbox"/>
+                    {/* <centered>Fidelity Card</centered> */}
                   </div>
                   <div  style={style.services}>
                     <div className="material-icons">credit_card</div>
-                    <Field className="material-icons" name="ticketRestaurant" type="checkbox" style={style.input}/>
-                    <label>Ticket Restaurant</label>
+                    <Field value={this.state.services.ticketRestaurant} className="material-icons" name="ticketRestaurant" type="checkbox" />
+                    {/* <centered>Ticket Restaurant</centered> */}
                   </div>
                   <div  style={style.services}>
                     <div className="material-icons">card_membership</div>
-                    <Field className="material-icons" name="chequeGourmet" type="checkbox" style={style.input}/>
-                    <label>Cheque Gourmet</label>
+                    <Field value={this.state.services.chequeGourmet} className="material-icons" name="chequeGourmet" type="checkbox" />
+                    {/* <centered>Cheque Gourmet</centered> */}
                   </div>
                   <div  style={style.services}>
                     <div className="material-icons">accessible</div>
-                    <Field className="material-icons" name="address" type="checkbox" style={style.input}/>
-                    <label>accessible</label>
+                    <Field value={this.state.services.adapted} className="material-icons" name="address" type="checkbox" />
+                    {/* <label>accessible</label> */}
                   </div>
                   <div  style={style.services}>
                     <div className="material-icons">wifi</div>
-                    <Field className="material-icons" name="wifi" type="checkbox" style={style.input}/>
-                    <label> wifi</label>
+                    <Field value={this.state.services.wifi} className="material-icons" name="wifi" type="checkbox"/>
+                    {/* <label> wifi</label> */}
                   </div>
                   <div  style={style.services}>
                     <div className="material-icons">signal_cellular_alt</div>
-                    <Field className="material-icons" name="address" type="checkbox" style={style.input}/>
-                    <label>movile Coverage</label>
+                    <Field value={this.state.services.movileCoverage} className="material-icons" name="address" type="checkbox" />
+                    {/* <label>movile Coverage</label> */}
                   </div>
                   <div  style={style.services}>
                     <div className="material-icons">pets</div>
-                    <Field className="material-icons" name="address" type="checkbox" style={style.input}/>
-                    <label>pet frienly</label>
+                    <Field value={this.state.services.pets} className="material-icons" name="address" type="checkbox" />
+                    {/* <label>pet frienly</label> */}
                   </div>
                 </div>
 
@@ -235,7 +252,7 @@ class NewPlace extends Component {
             )
           }
         </Formik>
-      </div>
+
     )
   }
 }

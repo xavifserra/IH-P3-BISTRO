@@ -22,8 +22,8 @@ class Private extends Component {
       {
         // eslint-disable-next-line array-callback-return
         features.map((element) => {
-          const {_id, services, place} = element.properties
-          if (place.includes(searchString)){
+          const {_id, services, name} = element.properties
+          if (name.includes(searchString)){
 // console.log({ properties:element.properties});
           return(
             <ListPlaces

@@ -104,7 +104,7 @@ export default class AuthProvider extends Component {
         //        lng = 2.1454805  //  2.189978
         //        lat = 41.4838637 //  41.397779
 
-        places.getAroundGeoJSON(lat, lng, 1000 )
+        places.getAroundGeoJSON(lat, lng, 100 )
         .then((data) => {
           // console.log(data)
           this.setState({
@@ -136,15 +136,6 @@ export default class AuthProvider extends Component {
     })
   }
 
-  saveNewPlace = (e) => {
-    // e.preventDefault() // not needed. Use Formik for send results
-    // console.log(e)
-    // console.log('save new place');
-    // mapServices.getAddresInCurrentCoordinates()
-    // if(navigator.geolocation){
-      //   return navigator.geolocation.getCurrentPosition(({coords}) => coords }
-      // }
-  }
 
   userDeleteProfile = (e) => {
     auth.delete()
@@ -179,8 +170,17 @@ export default class AuthProvider extends Component {
     }
   }
 
-  editPlace = () => {
+  saveNewPlace = (newPlace) => {
+    // e.preventDefault() // not needed. Use Formik for send results
+    console.log('save new place');
+    console.log(newPlace)
+     places.createPlace(newPlace)
+    .then(savedPlace=> !savedPlace.error ? this.locateMe() : null)
+  }
 
+  editPlace = (placeId, newDataInPlace) => {
+    places.updatePlace(placeId, newDataInPlace)
+    .then(savedPlace=> !savedPlace.error ? this.locateMe() : null)
   }
 
   deletePlace = (e) => {

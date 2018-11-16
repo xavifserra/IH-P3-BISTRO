@@ -115,7 +115,7 @@ class Profile extends Component {
                   <div
                     className="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent mdl-button--icon"
                     onClick={this.confirmDelete}>
-                    <i className="material-icons">delete</i>"
+                    <i className="material-icons">delete</i>
                   </div>
                 </div>
               </Form>

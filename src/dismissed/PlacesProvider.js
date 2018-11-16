@@ -50,7 +50,7 @@ export default class PlacesProvider extends Component {
         //        lng = 2.1454805  //  2.189978
         //        lat = 41.4838637 //  41.397779
 
-         places.getAroundGeoJSON(lat, lng, 1000 )
+         places.getAroundGeoJSON(lat, lng, 1000, 50 )
           .then((data) => {
             // console.log(data);
             this.setState({

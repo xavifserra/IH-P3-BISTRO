@@ -43,39 +43,36 @@ class ListPlaces extends Component {
       //   })
       // }
     }
+      render = () => {
+        const {
+          _id,
+          name,
+          place,
+          distance,
+          address,
+          category,
+          location ,
+          numReviews,
+          reviews,
+          details,
+          polarity,
+          lat,
+          lng,
+          owner,
+        } = this.props.place
+          // console.log(this.props.services);
+          const {
+            airConditioned,
+            fidelityCard,
+            ticketRestaurant,
+            chequeGourmet,
+            wifi,
+            movileCoverage,
+            pets,
+            adapted,
+          } = this.props.services
 
-    render = () => {
-      const {
-        _id,
-        name,
-        place,
-        distance,
-        address,
-        category,
-        location ,
-        numReviews,
-        reviews,
-        details,
-        polarity,
-        lat,
-        lng,
-        owner,
-      } = this.props.place
-      //  console.log(this.props.place);
-
-    const {
-      airConditioned,
-      fidelityCard,
-      ticketRestaurant,
-      chequeGourmet,
-      wifi,
-      movileCoverage,
-      pets,
-      adapted,
-    } = this.props.services
-    // console.log(this.props);
-
-    return (
+        return (
     <div>
       {
         // console.log( 'render:',placeId,'favoriteIsEnabled:',this.state.favoriteIsEnabled,'calculated:',this.props.user.favorites.some(e => e._id===this.props.place._id))
@@ -86,7 +83,7 @@ class ListPlaces extends Component {
           <p>{distance} km</p>
         </div>
         <div className="places">
-          <h5 >{place}</h5>
+          {/* <h5 >{place}</h5> */}
           <h5 >{name}</h5>
         </div>
 
@@ -111,7 +108,7 @@ class ListPlaces extends Component {
               classButtonShow="material-icons"
               textButtonShow= {owner===this.props.user._id?"edit":null}
             >
-              <NewPlace actualPlace={this.props.place}/>
+              <NewPlace actualPlace={this.props.place} editionMode={true} id={_id}/>
           </ModalForm>
           <div className="material-icons"
             onClick={this.props.deletePlace}>

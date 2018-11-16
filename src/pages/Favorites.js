@@ -21,6 +21,7 @@ import ListPlaces from '../components/ListPlaces/ListPlaces';
           // console.log({element} );
           // console.log( _id, services );
           if (element.name.includes(searchString)){
+
             return(
             <ListPlaces
               key={_id}
@@ -28,7 +29,20 @@ import ListPlaces from '../components/ListPlaces/ListPlaces';
               place={element}
               user={user}
               userFavorite={userFavorite}
-              services={services}
+              services={
+                services
+                ?services
+                :{
+                  airConditioned : false,
+                  fidelityCard:false,
+                  ticketRestaurant:false,
+                  chequeGourmet:false,
+                  wifi:false,
+                  movileCoverage:false,
+                  pets:false,
+                  adapted:false,
+                }
+              }
             />
             )}
           }

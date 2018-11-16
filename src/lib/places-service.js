@@ -44,7 +44,27 @@ class Places {
       return data
     })
   }
+
+  createPlace = (place) =>{
+
+    return this.places.post(`/api/v1/places`,place)
+      .then(({ data }) => {
+        //  console.log('new place:',{ data });
+        return data
+      })
+  }
+
+  updatePlace = (placeId, place) =>{
+
+    console.log(place);
+    return this.places.put(`/api/v1/places/${placeId}`,place)
+      .then(({ data }) => {
+         console.log('update place:',{ data });
+        return data
+      })
+  }
 }
+
 
 const places = new Places()
 
